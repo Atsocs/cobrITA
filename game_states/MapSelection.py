@@ -18,7 +18,7 @@ class MapSelection(GameState):
             {'name': 'hall', 'msg': '1', 'pos': (350, 200)},  # hall do A
             {'name': 'feijao', 'msg': '2', 'pos': (200, 100)},  # feijao
             {'name': 'quadra', 'msg': '3', 'pos': (200, 300)},  # quadra do C
-            {'name': 'apto', 'msg': '4', 'pos': (50, 200)},  # apto do C-
+            {'name': 'apart', 'msg': '4', 'pos': (50, 200)},  # apart do C-
             {'name': 'menu', 'msg': 'Menu', 'pos': (10, 10)},
         ]
 
@@ -82,7 +82,7 @@ class MapSelection(GameState):
 
     @staticmethod
     def get_gameplay_state(button):
-        return 'Gameplay' + button['name'].title().replace(' ', '')
+        return 'Playing' + button['name'].title().replace(' ', '')
 
     @staticmethod
     def text_objects(text, font):
