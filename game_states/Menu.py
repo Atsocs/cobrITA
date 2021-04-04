@@ -12,8 +12,7 @@ class Menu(GameState):
     def startup(self):
         self.selected = 1
         self.select(self.selected)
-        self.set_texts()
-        self.set_rect_centers()
+        self.update()
 
     def cleanup(self):
         self.unselect(self.selected)
@@ -81,4 +80,4 @@ class Menu(GameState):
 
     @staticmethod
     def to_class(string):
-        return string.replace('<', '').replace('>', '').replace(' ', '')
+        return string.title().replace('<', '').replace('>', '').replace(' ', '')
