@@ -3,8 +3,8 @@ import sys
 
 import pytmx
 
-from data.maps_utils.utils import translate
 from definitions import MAPS_DIR
+from maps_utils.utils import translate
 
 traduccion = {'2': '_', '1': '1'}
 

@@ -1,6 +1,6 @@
 import sys
 
-from data.maps_utils import create_random_txt_map, txt2tmx
+from maps_utils import create_random_txt_map, txt2tmx
 
 
 def main(name):

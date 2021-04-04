@@ -1,7 +1,7 @@
 import os
 
-from data.maps_utils import tmx2txt
-from data.maps_utils.erase_folder import erase_folder
+import tmx2txt
+from erase_folder import erase_folder
 from definitions import MAPS_DIR
 
 TXT_DIR = os.path.join(MAPS_DIR, 'txt')
