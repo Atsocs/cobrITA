@@ -3,7 +3,7 @@ import os
 import pygame
 
 from utils import draw_image
-from definitions import MAPS_DIR
+from definitions import MAPS_DIR, L
 
 
 class Map:
