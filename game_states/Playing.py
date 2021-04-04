@@ -14,12 +14,9 @@ from game_state_machine.GameState import GameState
 
 
 class Playing(GameState, ABC):
-    def __init__(self):
-        super().__init__()
-        self.snake = Snake()
-        self.food = Food()
-
-        self.update_score()
+    def __init__(self, next_state):
+        super().__init__(next_state)
+        self.startup()
         self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
         self.score_rect.move_ip(10, 10)
 
@@ -29,10 +26,13 @@ class Playing(GameState, ABC):
         self.map = Map(map_name, tmxdata)
 
     def startup(self):
-        pass
+        self.snake = Snake()
+        self.food = Food()
+        self.update_score()
 
     def cleanup(self):
-        pass
+        del self.snake
+        del self.food
 
     def update(self):
         collided = self.snake.move()
@@ -67,6 +67,8 @@ class Playing(GameState, ABC):
         }
         if e.key in d:
             self.snake.turn(d[e.key])
+        elif e.key == K_ESCAPE:
+            self.done = True
 
     def on_mouse_up(self, e):
         pass
@@ -76,24 +78,24 @@ class Playing(GameState, ABC):
 
 
 class PlayingFeijao(Playing):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, next_state):
+        super().__init__(next_state)
         self.get_map(map_name='feijao')
 
 
 class PlayingHall(Playing):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, next_state):
+        super().__init__(next_state)
         self.get_map(map_name='hall')
 
 
 class PlayingQuadra(Playing):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, next_state):
+        super().__init__(next_state)
         self.get_map(map_name='quadra')
 
 
 class PlayingApart(Playing):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, next_state):
+        super().__init__(next_state)
         self.get_map(map_name='apart')
