@@ -23,7 +23,6 @@ class Food:
                 random.randint(0, self.board_width - 1), random.randint(0, self.board_height - 1)
             )
             if self.position not in snake_body:
-                print(self.position)
                 return
 
     def draw(self, surface: pygame.Surface):
