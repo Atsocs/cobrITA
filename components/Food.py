@@ -3,7 +3,7 @@ import os
 
 import pygame
 
-from definitions import L, PX
+from definitions import L, PX, FOODS_DIR
 
 
 class Food:
@@ -11,7 +11,6 @@ class Food:
         self.position = (0, 0)
         self.board_width = self.board_height = L
         self.randomize_position()
-        self.sprite_path = os.path.join(os.getcwd(), 'resources', 'sprites', 'food')  # fixme
         self.sprite_counter = 0
 
     def randomize_position(self, snake_body=None):
@@ -36,10 +35,6 @@ class Food:
         self.sprite_counter += 1
 
     def get_sprite(self):
-        sprite = pygame.image.load(
-            os.path.join(
-                self.sprite_path, 'acai' + str(self.sprite_counter) + '.png'
-            )
-        )
-        sprite = sprite.convert_alpha()
+        filename = 'acai{}.png'.format(self.sprite_counter)
+        sprite = pygame.image.load(os.path.join(FOODS_DIR, filename)).convert_alpha()
         return sprite

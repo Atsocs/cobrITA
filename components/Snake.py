@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from definitions import L, PX
+from definitions import L, PX, BODY_DIR
 
 
 class Snake:
@@ -21,7 +21,6 @@ class Snake:
 
         self.directions = [self.head_direction]
 
-        self.sprite_path = os.path.join(os.getcwd(), 'resources', 'sprites', 'bixo')  # fixme
         self.sprite_counter = 0
 
     def get_head_position(self):
@@ -68,11 +67,6 @@ class Snake:
     def get_sprite(self, d):
         possible_directions = [{'dir': self.__dict__[x], 'name': x} for x in ('up', 'down', 'left', 'right')]
         direction = next(x['name'] for x in possible_directions if x['dir'] == d)
-        sprite = pygame.image.load(
-            os.path.join(
-                self.sprite_path, direction + '_move' + str(self.sprite_counter) + '.png'
-            )
-        )
-
-        sprite = sprite.convert_alpha()
+        filename = '{}_move{}.png'.format(direction, self.sprite_counter)
+        sprite = pygame.image.load(os.path.join(BODY_DIR, filename)).convert_alpha()
         return sprite
