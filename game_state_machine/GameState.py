@@ -14,7 +14,8 @@ class GameState(State, ABC):
         super().__init__(next_state)
         self.fonts = {
             'h1': pygame.font.Font(None, 30),
-            'h2': pygame.font.Font(None, 24)
+            'h2': pygame.font.Font(None, 24),
+            'm': pygame.font.Font("freesansbold.ttf", 20),  # todo: choose fonts
         }
 
     def update(self):

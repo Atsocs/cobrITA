@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 
+from definitions import background_color, credits_color
 from game_state_machine.GameState import GameState
 
 
@@ -22,7 +23,7 @@ class Menu(GameState):
         self.set_rect_centers()
 
     def draw(self, surface):
-        surface.fill(pygame.Color(33, 33, 33))
+        surface.fill(background_color)
         surface.blit(self.title, self.title_rect)
         surface.blit(self.mapselec, self.mapselec_rect)
         surface.blit(self.help, self.help_rect)
@@ -59,7 +60,7 @@ class Menu(GameState):
         self.title = f1.render(self.menus[0], True, pygame.Color("blue"))
         self.mapselec = f2.render(self.menus[1], True, pygame.Color("red"))
         self.help = f2.render(self.menus[2], True, pygame.Color("yellow"))
-        self.credits = f2.render(self.menus[3], True, pygame.Color(245, 245, 245))
+        self.credits = f2.render(self.menus[3], True, credits_color)
 
     def set_rect_centers(self):
         self.set_texts()
