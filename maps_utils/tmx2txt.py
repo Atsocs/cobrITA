@@ -4,7 +4,7 @@ import sys
 import pytmx
 
 from definitions import MAPS_DIR
-from maps_utils.utils import translate
+from maps_utils.meta_utils import translate
 
 traduccion = {'2': '_', '1': '1'}
 

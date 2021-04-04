@@ -2,7 +2,7 @@ import os
 import sys
 
 from definitions import MAPS_DIR
-from maps_utils.utils import translate
+from maps_utils.meta_utils import translate
 
 traduccion = {'1': '1', '_': '2'}
 

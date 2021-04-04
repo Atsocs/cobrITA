@@ -2,6 +2,12 @@ import os
 import shutil
 
 
+def translate(s, traduccion):
+    for o, n in traduccion.items():
+        s = s.replace(o, n)
+    return s
+
+
 def erase_folder(folder):
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
