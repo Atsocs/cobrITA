@@ -4,8 +4,7 @@ from state_machine.Control import Control
 
 
 class GameControl(Control):
-    def __init__(self, states, start_state, screen, fps, testing=False):
-        self.testing = testing
+    def __init__(self, states, start_state, screen, fps):
         self.screen = screen
         self.clock = pygame.time.Clock()
         self.fps = fps
@@ -17,8 +16,7 @@ class GameControl(Control):
         spent inside this while loop.
         """
         while not self.done:
-            if not self.testing:
-                self.clock.tick(self.fps)
+            self.clock.tick(self.fps)
             self.event_loop()
             self.update()
             self.draw()
