@@ -25,3 +25,4 @@ class Control(object):
         self.state.cleanup()
         self.state_name = next_state
         self.state = self.states[self.state_name]
+        self.state.startup()
