@@ -20,6 +20,7 @@ class Control(object):
     def _flip_state(self):
         """Switch to the next game state."""
         next_state = self.state.next_state
+        assert next_state is not None
         self.state.done = False
         self.state.cleanup()
         self.state_name = next_state
