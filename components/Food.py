@@ -27,7 +27,7 @@ class Food:
                 return
 
     def draw(self, surface: pygame.Surface):
-        if self.sprite_counter > 2:
+        if self.sprite_counter > 3:
             self.sprite_counter = 0
 
         sprite = self.get_sprite()
