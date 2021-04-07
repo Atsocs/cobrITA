@@ -22,7 +22,7 @@ class Snake:
 
         self.directions = [self.head_direction]
 
-        self.sprite_counter = 0
+        self.sprite_counter = 1
         self.spritesheet = Spritesheet(SNAKE_SPRITESHEET)
 
     def get_head_position(self):
@@ -58,12 +58,13 @@ class Snake:
 
     def draw(self, surface: pygame.Surface):
         if self.sprite_counter > 2:
-            self.sprite_counter = 0
+            self.sprite_counter = 1
 
         for pos, direction in zip(self.body, self.directions):
             pos = tuple((PX * x) for x in pos)
             sprite = self.get_sprite(direction)
             surface.blit(sprite, pos)
+
         self.sprite_counter += 1
 
     def get_sprite(self, d):
