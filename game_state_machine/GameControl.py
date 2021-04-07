@@ -37,3 +37,10 @@ class GameControl(Control):
     def draw(self):
         """Pass display surface to active state for drawing."""
         self.state.draw(self.screen)
+
+    def _flip_state(self):
+        if self.state_name == 'Paused':
+            self.state.next_state = 'Menu' if self.state.go_to_menu else self.previous_state
+        self.previous_state = self.state_name
+        super()._flip_state()
+

@@ -16,6 +16,7 @@ from game_state_machine.GameState import GameState
 class Playing(GameState, ABC):
     def __init__(self, next_state):
         super().__init__(next_state)
+        self.curr_map = None
         self.startup()
         self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
         self.score_rect.move_ip(10, 10)
@@ -31,8 +32,9 @@ class Playing(GameState, ABC):
         self.update_score()
 
     def cleanup(self):
-        del self.snake
-        del self.food
+        pass
+        # del self.snake
+        #del self.food
 
     def update(self):
         collided = self.snake.move()
@@ -68,6 +70,7 @@ class Playing(GameState, ABC):
         if e.key in d:
             self.snake.turn(d[e.key])
         elif e.key == K_ESCAPE:
+            self.next_state = 'Paused'
             self.done = True
 
     def on_mouse_up(self, e):
@@ -79,18 +82,21 @@ class Playing(GameState, ABC):
 
 class PlayingFeijao(Playing):
     def __init__(self, next_state):
+        self.curr_map = "PlayingFeijao"
         super().__init__(next_state)
         self.get_map(map_name='feijao')
 
 
 class PlayingHall(Playing):
     def __init__(self, next_state):
+        self.curr_map = "PlayingHall"
         super().__init__(next_state)
         self.get_map(map_name='hall')
 
 
 class PlayingQuadra(Playing):
     def __init__(self, next_state):
+        self.curr_map = "PlayingQuadra"
         super().__init__(next_state)
         self.get_map(map_name='quadra')
 
