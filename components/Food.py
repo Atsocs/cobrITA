@@ -3,7 +3,8 @@ import os
 
 import pygame
 
-from definitions import L, PX, FOODS_DIR
+from definitions import L, PX, SPRITES_DIR, SNAKE_SPRITESHEET
+from components.Spritesheet import Spritesheet
 
 
 class Food:
@@ -12,6 +13,7 @@ class Food:
         self.board_width = self.board_height = L
         self.randomize_position()
         self.sprite_counter = 0
+        self.spritesheet = Spritesheet(SNAKE_SPRITESHEET)
 
     def randomize_position(self, snake_body=None):
         if snake_body is None:
@@ -25,7 +27,7 @@ class Food:
                 return
 
     def draw(self, surface: pygame.Surface):
-        if self.sprite_counter > 1:
+        if self.sprite_counter > 2:
             self.sprite_counter = 0
 
         sprite = self.get_sprite()
@@ -35,6 +37,7 @@ class Food:
         self.sprite_counter += 1
 
     def get_sprite(self):
-        filename = 'acai{}.png'.format(self.sprite_counter)
-        sprite = pygame.image.load(os.path.join(FOODS_DIR, filename)).convert_alpha()
+        filename = 'down_{}.png'.format(self.sprite_counter)
+        sprite = self.spritesheet.parse_sprite(filename)
+        # sprite = pygame.image.load(os.path.join(SPRITES_DIR, filename)).convert_alpha()
         return sprite
