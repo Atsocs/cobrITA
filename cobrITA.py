@@ -4,6 +4,7 @@ import pygame
 
 from definitions import PX, L
 from game_state_machine.GameControl import GameControl
+from game_states.Achievements import Achievements
 from game_states.Credits import Credits
 from game_states.Help import Help
 from game_states.MapSelection import MapSelection
@@ -14,7 +15,7 @@ pygame.init()
 screen = pygame.display.set_mode(screen_size := (PX * L, PX * L))
 fps = 5
 
-states = [Menu(), Credits('Menu'), Help('Menu'), MapSelection(),
+states = [Menu(), Credits('Menu'), Help('Menu'), Achievements('Menu'), MapSelection(),
           PlayingFeijao('Menu'), PlayingQuadra('Menu'), PlayingApart('Menu'), PlayingHall('Menu')]
 start_state = 'Menu'
 
