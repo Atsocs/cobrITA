@@ -43,16 +43,12 @@ class Menu(GameState):
 
     def down(self):
         self.unselect(self.selected)
-        self.selected -= 1
-        if self.selected <= 0:
-            self.selected = len(self.menus) - 1
+        self.selected = 1 + (self.selected % (len(self.menus) - 1))
         self.select(self.selected)
 
     def up(self):
         self.unselect(self.selected)
-        self.selected += 1
-        if self.selected >= len(self.menus):
-            self.selected = 1
+        self.selected = (self.selected - 2) % (len(self.menus) - 1) + 1
         self.select(self.selected)
 
     def set_texts(self):
