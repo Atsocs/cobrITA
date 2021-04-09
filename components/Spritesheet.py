@@ -17,7 +17,7 @@ class Spritesheet:
         self.num_sprites = num_sprites
 
     def parse_sprite(self, name: str) -> pygame.Surface:
-        name = name + '_{}.png'.format(self.sprite_counter)
+        name = name + '_{}'.format(self.sprite_counter)
         data = self.metadata['frames'][name]['frame']
         x, y, w, h = data['x'], data['y'], data['w'], data['h']
         sprite = pygame.Surface((w, h))
