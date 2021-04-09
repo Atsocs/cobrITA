@@ -22,5 +22,11 @@ CREATE_PWUP = pygame.event.custom_type()
 # pygame event to stop power-up effect
 STOP_EFFECT = pygame.event.custom_type()
 
+# available power-ups
+PWUP_DICT = {
+    'Accelerate': 0,
+    'Reverse': 1
+}
+
 background_color = pygame.Color(33, 33, 33)
 credits_color = pygame.Color(245, 245, 245)
