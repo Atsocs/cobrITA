@@ -15,7 +15,12 @@ class GameControl(Control):
         spent inside this while loop.
         """
         while not self.done:
-            self.clock.tick(self.fps)
+            if self.state.__str__()[:7] == 'Playing':
+                # fps for Playing states
+                c = self.state.snake.speed
+                self.clock.tick(c*self.fps)
+            else:
+                self.clock.tick(self.fps)
             self.event_loop()
             self.update()
             self.draw()

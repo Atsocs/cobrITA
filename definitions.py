@@ -11,6 +11,14 @@ SPRITES_DIR = os.path.join(RESOURCES_DIR, 'sprites')
 PX = 32
 L = 20
 
+# factor that multiplies the fps while playing
+SNAKE_SPEED = 1
+
+# pygame event for power-up creation
+CREATE_PWUP = pygame.event.custom_type()
+# pygame event to stop power-up effect
+STOP_EFFECT = pygame.event.custom_type()
+
 background_color = pygame.Color(33, 33, 33)
 credits_color = pygame.Color(245, 245, 245)
 achiev_color = pygame.Color(246, 246, 246)
