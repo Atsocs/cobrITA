@@ -10,7 +10,7 @@ from components.Snake import Snake
 from components.Food import Food
 from components.Map import Map
 from components.PowerUpFactory import PowerUpFactory
-from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP
+from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT
 from game_state_machine.GameState import GameState
 
 
@@ -29,7 +29,7 @@ class Playing(GameState, ABC):
             return
         self.snake = Snake()
         self.food = Food()
-        self.factory = PowerUpFactory({})  # {}: dict with possible power-up list
+        self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         # interval time to CREATE_PWUP event
         interval = 5000
         pygame.time.set_timer(CREATE_PWUP, interval)

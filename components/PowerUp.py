@@ -37,7 +37,7 @@ class PowerUp:
         self.sprite_counter += 1
 
     def get_sprite(self):
-        filename = 'pup{}.png'.format(self.sprite_counter)
+        filename = 'pup{}{}.png'.format(self.effect, self.sprite_counter)
         sprite = pygame.image.load(os.path.join(POWERUPS_DIR, filename)).convert_alpha()
         return sprite
 
