@@ -17,10 +17,12 @@ class PowerUpFactory:
         self.item_limit = item_limit
         self.collectable_powerups = []
 
-    def maybe_create_powerup(self, snake_positions):
+    def maybe_create_powerup(self, prohibited=None):
         """
         Simplified creation method
         """
+        if prohibited is None:
+            prohibited = []
         if len(self.collectable_powerups) >= self.item_limit:
             return
         k = random.random()
@@ -28,11 +30,11 @@ class PowerUpFactory:
         if k > 0.7:
             # Accelerate effect
             self.collectable_powerups.append(PowerUp(self.dict['Accelerate']))
-            self.collectable_powerups[-1].randomize_position(snake_positions)
+            self.collectable_powerups[-1].randomize_position(prohibited)
         elif k < 0.3:
             # Reverse effect
             self.collectable_powerups.append(PowerUp(self.dict['Reverse']))
-            self.collectable_powerups[-1].randomize_position(snake_positions)
+            self.collectable_powerups[-1].randomize_position(prohibited)
 
     def get_positions(self):
         """
