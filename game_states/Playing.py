@@ -9,7 +9,8 @@ from pygame.locals import *
 from components.Snake import Snake
 from components.Food import Food
 from components.Map import Map
-from definitions import MAPS_DIR
+from components.PowerUpFactory import PowerUpFactory
+from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP
 from game_state_machine.GameState import GameState
 
 
@@ -28,11 +29,16 @@ class Playing(GameState, ABC):
     def startup(self):
         self.snake = Snake()
         self.food = Food()
+        self.factory = PowerUpFactory({})  # {}: dict with possible power-up list
+        # interval time to CREATE_PWUP event
+        interval = 5000
+        pygame.time.set_timer(CREATE_PWUP, interval)
         self.update_score()
 
     def cleanup(self):
         del self.snake
         del self.food
+        del self.factory
 
     def update(self):
         collided = self.snake.move()
@@ -43,6 +49,13 @@ class Playing(GameState, ABC):
         if self.snake.get_head_position() == self.food.position:
             self.snake.length += 1
             self.food.randomize_position(self.snake.body)
+
+        for p in self.factory.collectable_powerups:
+            if self.snake.get_head_position() == p.position:
+                p.get_effect(self.snake)
+                self.active_powerup = p
+                self.factory.collectable_powerups.remove(p)
+                break
 
         self.update_score()
 
@@ -56,6 +69,8 @@ class Playing(GameState, ABC):
         self.map.draw(surface)
         self.snake.draw(surface)
         self.food.draw(surface)
+        for p in self.factory.collectable_powerups:
+            p.draw(surface)
         surface.blit(self.score_surf, self.score_rect)
 
     def on_key_up(self, e):
@@ -75,6 +90,15 @@ class Playing(GameState, ABC):
 
     def on_collision(self):
         self.done = True
+
+    def get_event(self, event):
+        if event.type == CREATE_PWUP:
+            self.factory.maybe_create_powerup(self.snake.body)
+            return True
+        if event.type == STOP_EFFECT:
+            self.active_powerup.reset_effect(self.snake)
+            return True
+        return super().get_event(event)
 
 
 class PlayingFeijao(Playing):

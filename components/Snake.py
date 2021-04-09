@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from definitions import L, PX, BODY_DIR
+from definitions import L, PX, BODY_DIR, SNAKE_SPEED
 
 
 class Snake:
@@ -13,12 +13,13 @@ class Snake:
         self.left = (-1, 0)
         self.right = (1, 0)
         self.width = self.height = L
-        d = (self.up, self.down, self.left, self.right)
-
         self.length = 1
-        self.head_direction = random.choice(d)
-        self.body = [head := (self.width // 2, self.height // 2)]
+        self.speed = SNAKE_SPEED
 
+        d = (self.up, self.down, self.left, self.right)
+        self.head_direction = random.choice(d)
+
+        self.body = [head := (self.width // 2, self.height // 2)]
         self.directions = [self.head_direction]
 
         self.sprite_counter = 0
