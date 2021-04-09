@@ -21,7 +21,9 @@ class Snake:
 
         self.directions = [self.head_direction]
 
-        self.spritesheet = Spritesheet('Character', 4)
+        self.sprite_counter = 0
+        self.num_sprites = 4
+        self.spritesheet = Spritesheet('Character')
 
     def get_head_position(self):
         return self.body[0]
@@ -60,8 +62,11 @@ class Snake:
             sprite = self.get_sprite(direction)
             surface.blit(sprite, pos)
 
+        self.sprite_counter = (self.sprite_counter + 1) % self.num_sprites
+
     def get_sprite(self, d):
         possible_directions = [{'dir': self.__dict__[x], 'name': x} for x in ('up', 'down', 'left', 'right')]
         direction = next(x['name'] for x in possible_directions if x['dir'] == d)
-        sprite = self.spritesheet.parse_sprite(direction)
+        frame_name = '{}_{}'.format(direction, self.sprite_counter)
+        sprite = self.spritesheet.parse_sprite(frame_name)
         return sprite

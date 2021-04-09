@@ -11,7 +11,10 @@ class Food:
         self.position = (0, 0)
         self.board_width = self.board_height = L
         self.randomize_position()
-        self.spritesheet = Spritesheet('Character', 4)
+
+        self.sprite_counter = 0
+        self.num_sprites = 4
+        self.spritesheet = Spritesheet('Character')
 
     def randomize_position(self, snake_body=None):
         if snake_body is None:
@@ -28,7 +31,9 @@ class Food:
         sprite = self.get_sprite()
         pos = tuple((x * PX) for x in self.position)
         surface.blit(sprite, pos)
+        self.sprite_counter = (self.sprite_counter + 1) % self.num_sprites
 
     def get_sprite(self):
-        sprite = self.spritesheet.parse_sprite('down')
+        frame_name = 'down_{}'.format(self.sprite_counter)
+        sprite = self.spritesheet.parse_sprite(frame_name)
         return sprite
