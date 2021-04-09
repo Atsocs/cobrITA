@@ -15,15 +15,15 @@ class PowerUp:
         # key to define power-up effect
         self.effect = effect_key
 
-    def randomize_position(self, snake_body=None):
-        if snake_body is None:
-            snake_body = []
+    def randomize_position(self, prohibited=None):
+        if prohibited is None:
+            prohibited = []
         while True:
             self.position = (
                 random.randint(0, self.board_width - 1), random.randint(0, self.board_height - 1)
             )
             # item position can't override snake's body
-            if self.position not in snake_body:
+            if self.position not in prohibited:
                 return
 
     def draw(self, surface: pygame.Surface):
@@ -47,10 +47,11 @@ class PowerUp:
         """
         if self.effect == 0:
             # increases snake speed by a factor of 2
-            snake.speed = 2*SNAKE_SPEED
+            snake.speed = 2*snake.speed
             interval = 3000
             pygame.time.set_timer(STOP_EFFECT, interval)
         elif self.effect == 1:
+            # reverses the snake
             tmp = []
             for i, d in enumerate(snake.directions):
                 if d == snake.up:

@@ -31,7 +31,7 @@ class Playing(GameState, ABC):
         self.food = Food()
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         # interval time to CREATE_PWUP event
-        interval = 3000
+        interval = 5000
         pygame.time.set_timer(CREATE_PWUP, interval)
         self.update_score()
 
@@ -48,7 +48,7 @@ class Playing(GameState, ABC):
 
         if self.snake.get_head_position() == self.food.position:
             self.snake.length += 1
-            self.food.randomize_position(self.snake.body)
+            self.food.randomize_position(self.snake.body+self.factory.get_positions())
 
         for p in self.factory.collectable_powerups:
             if self.snake.get_head_position() == p.position:
@@ -93,7 +93,8 @@ class Playing(GameState, ABC):
 
     def get_event(self, event):
         if event.type == CREATE_PWUP:
-            self.factory.maybe_create_powerup(self.snake.body)
+            prohibited = self.snake.body+self.factory.get_positions()+[self.food.position]
+            self.factory.maybe_create_powerup(prohibited)
             return True
         if event.type == STOP_EFFECT:
             self.active_powerup.reset_effect(self.snake)

@@ -13,15 +13,15 @@ class Food:
         self.randomize_position()
         self.sprite_counter = 0
 
-    def randomize_position(self, snake_body=None):
-        if snake_body is None:
-            snake_body = []
+    def randomize_position(self, prohibited=None):
+        if prohibited is None:
+            prohibited = []
         # item position can't override snake's body
         while True:
             self.position = (
                 random.randint(0, self.board_width - 1), random.randint(0, self.board_height - 1)
             )
-            if self.position not in snake_body:
+            if self.position not in prohibited:
                 return
 
     def draw(self, surface: pygame.Surface):
