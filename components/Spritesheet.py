@@ -7,23 +7,22 @@ from definitions import SPRITES_DIR
 
 
 class Spritesheet:
-    def __init__(self, sprite_type: str):
-        png_path = os.path.join(SPRITES_DIR, sprite_type + '.png')
-        json_path = os.path.join(SPRITES_DIR, sprite_type + '.json')
+    def __init__(self, spritesheet_name: str, num_sprites: int):
+        png_path = os.path.join(SPRITES_DIR, spritesheet_name + '.png')
+        json_path = os.path.join(SPRITES_DIR, spritesheet_name + '.json')
         self.sprite_sheet = pygame.image.load(png_path).convert()
         with open(json_path) as f:
             self.metadata = json.load(f)
-        f.close()
+        self.sprite_counter = 0
+        self.num_sprites = num_sprites
 
-    def get_sprite(self, x: int, y: int, w: int, h: int) -> pygame.Surface:
+    def parse_sprite(self, name: str) -> pygame.Surface:
+        name = name + '_{}.png'.format(self.sprite_counter)
+        data = self.metadata['frames'][name]['frame']
+        x, y, w, h = data['x'], data['y'], data['w'], data['h']
         sprite = pygame.Surface((w, h))
         rect = pygame.Rect(x, y, w, h)
         sprite.set_colorkey((0, 0, 0))
         sprite.blit(self.sprite_sheet, (0, 0), rect)
+        self.sprite_counter = (self.sprite_counter + 1) % self.num_sprites
         return sprite
-
-    def parse_sprite(self, name: str) -> pygame.Surface:
-        data = self.metadata['frames'][name]['frame']
-        x, y, w, h = data['x'], data['y'], data['w'], data['h']
-        image = self.get_sprite(x, y, w, h)
-        return image

@@ -21,8 +21,7 @@ class Snake:
 
         self.directions = [self.head_direction]
 
-        self.sprite_counter = 0
-        self.spritesheet = Spritesheet('Character')
+        self.spritesheet = Spritesheet('Character', 4)
 
     def get_head_position(self):
         return self.body[0]
@@ -56,19 +55,13 @@ class Snake:
             return False
 
     def draw(self, surface: pygame.Surface):
-        if self.sprite_counter > 3:
-            self.sprite_counter = 0
-
         for pos, direction in zip(self.body, self.directions):
             pos = tuple((PX * x) for x in pos)
             sprite = self.get_sprite(direction)
             surface.blit(sprite, pos)
 
-        self.sprite_counter += 1
-
     def get_sprite(self, d):
         possible_directions = [{'dir': self.__dict__[x], 'name': x} for x in ('up', 'down', 'left', 'right')]
         direction = next(x['name'] for x in possible_directions if x['dir'] == d)
-        filename = '{0}_{1}.png'.format(direction, self.sprite_counter)
-        sprite = self.spritesheet.parse_sprite(filename)
+        sprite = self.spritesheet.parse_sprite(direction)
         return sprite
