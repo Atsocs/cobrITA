@@ -23,7 +23,7 @@ class Spritesheet:
         return sprite
 
     def parse_sprite(self, name: str) -> pygame.Surface:
-        data = self.metadata[name]['frame']
+        data = self.metadata['frames'][name]['frame']
         x, y, w, h = data['x'], data['y'], data['w'], data['h']
         image = self.get_sprite(x, y, w, h)
         return image

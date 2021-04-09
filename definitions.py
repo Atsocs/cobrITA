@@ -7,10 +7,6 @@ RESOURCES_DIR = os.path.join(ROOT_DIR, 'resources')
 MAPS_DIR = os.path.join(RESOURCES_DIR, 'maps')
 TMX_DIR = os.path.join(MAPS_DIR, 'tmx')
 SPRITES_DIR = os.path.join(RESOURCES_DIR, 'sprites')
-# FOODS_DIR = os.path.join(SPRITES_DIR, 'food')
-# BODY_DIR = os.path.join(SPRITES_DIR, 'body')
-
-SNAKE_SPRITESHEET = 'Character'
 
 PX = 32
 L = 20
