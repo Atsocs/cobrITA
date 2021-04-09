@@ -7,13 +7,16 @@ from definitions import L, PX, POWERUPS_DIR, STOP_EFFECT, SNAKE_SPEED
 
 
 class PowerUp:
-    def __init__(self, effect_key):
+    def __init__(self, dic):
         self.position = (0, 0)
         self.board_width = self.board_height = L
         self.randomize_position()
         self.sprite_counter = 0
         # key to define power-up effect
-        self.effect = effect_key
+        self.effect_key = dic['key']
+        self.lasting = dic['lasting']
+        if self.lasting:
+            self.duration = dic['interval']
 
     def randomize_position(self, prohibited=None):
         if prohibited is None:
@@ -37,7 +40,7 @@ class PowerUp:
         self.sprite_counter += 1
 
     def get_sprite(self):
-        filename = 'pup{}{}.png'.format(self.effect, self.sprite_counter)
+        filename = 'pup{}{}.png'.format(self.effect_key, self.sprite_counter)
         sprite = pygame.image.load(os.path.join(POWERUPS_DIR, filename)).convert_alpha()
         return sprite
 
@@ -45,12 +48,11 @@ class PowerUp:
         """
         Method to cause the corresponding effect on the snake
         """
-        if self.effect == 0:
+        if self.effect_key == 0:
             # increases snake speed by a factor of 2
-            snake.speed = 2*snake.speed
-            interval = 3000
-            pygame.time.set_timer(STOP_EFFECT, interval)
-        elif self.effect == 1:
+            snake.speed = 2*SNAKE_SPEED
+            pygame.time.set_timer(STOP_EFFECT, self.duration, 1)
+        elif self.effect_key == 1:
             # reverses the snake
             tmp = []
             for i, d in enumerate(snake.directions):
@@ -67,5 +69,5 @@ class PowerUp:
             snake.body.reverse()
 
     def reset_effect(self, snake):
-        if self.effect == 0:
+        if self.effect_key == 0:
             snake.speed = SNAKE_SPEED
