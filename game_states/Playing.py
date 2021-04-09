@@ -31,7 +31,7 @@ class Playing(GameState, ABC):
         self.food = Food()
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         # interval time to CREATE_PWUP event
-        interval = 5000
+        interval = 3000
         pygame.time.set_timer(CREATE_PWUP, interval)
         self.update_score()
 

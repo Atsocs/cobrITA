@@ -51,7 +51,19 @@ class PowerUp:
             interval = 3000
             pygame.time.set_timer(STOP_EFFECT, interval)
         elif self.effect == 1:
-            pass
+            tmp = []
+            for i, d in enumerate(snake.directions):
+                if d == snake.up:
+                    tmp.insert(0, snake.down)
+                elif d == snake.left:
+                    tmp.insert(0, snake.right)
+                elif d == snake.right:
+                    tmp.insert(0, snake.left)
+                elif d == snake.down:
+                    tmp.insert(0, snake.up)
+            snake.directions = tmp
+            snake.head_direction = tmp[0]
+            snake.body.reverse()
 
     def reset_effect(self, snake):
         if self.effect == 0:
