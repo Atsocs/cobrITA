@@ -1,7 +1,7 @@
 import pygame
 
 from state_machine.Control import Control
-
+from game_states import Snacks as S
 
 class GameControl(Control):
     def __init__(self, states, start_state, screen, fps):
@@ -41,6 +41,8 @@ class GameControl(Control):
     def _flip_state(self):
         if self.state_name == 'Paused':
             self.state.next_state = 'Menu' if self.state.go_to_menu else self.previous_state
+            if self.state.next_state == 'Menu':
+                S.Snacks("CVAE: Você Trancou!", pygame.font.get_default_font(), 15, 16, 10, 'red', 5)
         self.previous_state = self.state_name
         super()._flip_state()
 

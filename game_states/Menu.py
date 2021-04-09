@@ -68,6 +68,7 @@ class Menu(GameState):
         self.credits_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 20)
         self.help_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 40)
         self.mapselec_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1])
+        self.achiev_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 60)
         self.title_rect = self.title.get_rect(center=self.title_center)
         self.help_rect = self.help.get_rect(center=self.help_center)
         self.credits_rect = self.credits.get_rect(center=self.credits_center)

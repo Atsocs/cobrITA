@@ -44,7 +44,6 @@ class Paused (GameState):
     def down(self):
         self.unselect(self.selected)
         self.selected += 1
-        print(self.selected)
         if self.selected >= len(self.options):
             self.selected = 1
         self.select(self.selected)
@@ -52,7 +51,6 @@ class Paused (GameState):
     def up(self):
         self.unselect(self.selected)
         self.selected -= 1
-        print(self.selected)
         if self.selected <= 0:
             self.selected = len(self.options) - 1
         self.select(self.selected)
