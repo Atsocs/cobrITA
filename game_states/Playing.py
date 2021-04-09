@@ -10,7 +10,7 @@ from components.Snake import Snake
 from components.Food import Food
 from components.Map import Map
 from components.PowerUpFactory import PowerUpFactory
-from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT
+from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT, MAX_SCORES
 from game_state_machine.GameState import GameState
 
 
@@ -33,6 +33,7 @@ class Playing(GameState, ABC):
         # interval time to CREATE_PWUP event
         interval = 5000
         pygame.time.set_timer(CREATE_PWUP, interval)
+        self.active_powerups = []
         self.update_score()
 
     def cleanup(self):
@@ -55,19 +56,49 @@ class Playing(GameState, ABC):
         for p in self.factory.collectable_powerups:
             if self.snake.get_head_position() == p.position:
                 p.get_effect(self.snake)
-                self.active_powerup = p
+                if p.lasting:
+                    self.active_powerups.append(p)
                 self.factory.collectable_powerups.remove(p)
                 break
 
         self.update_score()
 
     def update_score(self):
-        score = self.snake.length - 1
+        maxsc = MAX_SCORES[self.__str__()[7:]]
+        sc = (self.snake.length - 1)/maxsc
+        # fail -> belle epoque or little hell
+        # legend -> cancer area
+        fail = legend = False
+
+        if sc >= 0.95:
+            score = 'L'
+            legend = True
+        elif sc >= 0.85:
+            score = 'MB'
+        elif sc >= 0.75:
+            score = 'B'
+        elif sc >= 0.65:
+            score = 'R'
+        elif sc >= 0.5:
+            score = 'I'
+            fail = True
+        else:
+            score = 'D'
+            fail = True
+
         score_text = "Score: {}".format(score)
         f = self.fonts['h2']
         self.score_surf = f.render(score_text, True, pygame.Color("yellow"))
         self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
         self.score_rect.move_ip(10, 10)
+        # change color based on the concepts
+        if fail:
+            color = pygame.Color("red")
+        elif legend:
+            color = pygame.Color("green")
+        else:
+            color = pygame.Color("yellow")
+        self.score_surf = f.render(score_text, True, color)
 
     def draw(self, surface):
         self.map.draw(surface)
@@ -104,7 +135,7 @@ class Playing(GameState, ABC):
             self.factory.maybe_create_powerup(prohibited)
             return True
         if event.type == STOP_EFFECT:
-            self.active_powerup.reset_effect(self.snake)
+            self.active_powerups.pop(0).reset_effect(self.snake)
             return True
         return super().get_event(event)
 

@@ -21,8 +21,17 @@ STOP_EFFECT = pygame.event.custom_type()
 
 # available power-ups
 PWUP_DICT = {
-    'Accelerate': 0,
-    'Reverse': 1
+    'Accelerate': {'key': 0, 'lasting': True, 'interval': 3000},
+    'Reverse': {'key': 1, 'lasting': False}
+}
+
+# max scores to each map
+# concepts (L, MB, B, R, I and D) are based on this
+MAX_SCORES = {
+    'Feijao': 12,
+    'Hall': 12,
+    'Quadra': 12,
+    'Apart': 12
 }
 
 background_color = pygame.Color(33, 33, 33)
