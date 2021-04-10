@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from definitions import L, PX
+from definitions import L, PX, UPDATE_CONST
 from components.Spritesheet import Spritesheet
 
 
@@ -14,7 +14,7 @@ class Snake:
         self.right = (1, 0)
         self.width = self.height = L
         self.length = 1
-        self.speed = SNAKE_SPEED
+        self.update_counter = UPDATE_CONST
 
         d = (self.up, self.down, self.left, self.right)
         self.head_direction = random.choice(d)
@@ -58,12 +58,15 @@ class Snake:
             return False
 
     def draw(self, surface: pygame.Surface):
+        if self.sprite_counter >= 2*self.update_counter:
+            self.sprite_counter = 0
+
         for pos, direction in zip(self.body, self.directions):
             pos = tuple((PX * x) for x in pos)
             sprite = self.get_sprite(direction)
             surface.blit(sprite, pos)
 
-        self.sprite_counter = (self.sprite_counter + 1) % self.num_sprites
+        self.sprite_counter += 1
 
     def get_sprite(self, d):
         possible_directions = [{'dir': self.__dict__[x], 'name': x} for x in ('up', 'down', 'left', 'right')]
@@ -71,3 +74,18 @@ class Snake:
         frame_name = f'{direction}_{self.sprite_counter}'
         sprite = self.spritesheet.parse_sprite(frame_name)
         return sprite
+
+    def reverse(self):
+        tmp = []
+        for i, d in enumerate(self.directions):
+            if d == self.up:
+                tmp.insert(0, self.down)
+            elif d == self.left:
+                tmp.insert(0, self.right)
+            elif d == self.right:
+                tmp.insert(0, self.left)
+            elif d == self.down:
+                tmp.insert(0, self.up)
+        self.directions = tmp
+        self.head_direction = tmp[0]
+        self.body.reverse()

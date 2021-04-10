@@ -6,14 +6,12 @@ class PowerUpFactory:
     """
     Class to control the power-up creation
     """
-    def __init__(self, items, item_limit=None):
+    def __init__(self, items, item_limit=3):
         """
         :param items: dict that contains the possible power-ups with different powers and probabilities
         :param item_limit: max number of power-ups to be displayed at the same time on the map
         """
-        self.dic = items
-        if item_limit is None:
-            item_limit = 3
+        self.items = items
         self.item_limit = item_limit
         self.collectable_powerups = []
 
@@ -29,11 +27,11 @@ class PowerUpFactory:
         # may define here probabilities to each power-up
         if k > 0.7:
             # Accelerate effect
-            self.collectable_powerups.append(PowerUp(self.dic['Accelerate']))
+            self.collectable_powerups.append(PowerUp(**self.items['Accelerate']))
             self.collectable_powerups[-1].randomize_position(prohibited)
         elif k < 0.2:
             # Reverse effect
-            self.collectable_powerups.append(PowerUp(self.dic['Reverse']))
+            self.collectable_powerups.append(PowerUp(**self.items['Reverse']))
             self.collectable_powerups[-1].randomize_position(prohibited)
 
     def get_positions(self):

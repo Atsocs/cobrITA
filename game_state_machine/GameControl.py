@@ -1,5 +1,6 @@
 import pygame
 from state_machine.Control import Control
+from game_states.Playing import Playing
 
 
 class GameControl(Control):
@@ -7,6 +8,7 @@ class GameControl(Control):
         self.screen = screen
         self.clock = pygame.time.Clock()
         self.fps = fps
+        self.clock_counter = 0
         super().__init__(states, start_state)
 
     def run(self):
@@ -15,12 +17,8 @@ class GameControl(Control):
         spent inside this while loop.
         """
         while not self.done:
-            if self.state.__str__()[:7] == 'Playing':
-                # fps for Playing states
-                c = self.state.snake.speed
-                self.clock.tick(c*self.fps)
-            else:
-                self.clock.tick(self.fps)
+            self.clock_counter += 1
+            self.clock.tick(self.fps)
             self.event_loop()
             self.update()
             self.draw()
@@ -36,7 +34,12 @@ class GameControl(Control):
         Check for state flip and update active state.
         """
         super().update()
-        self.state.update()
+        if issubclass(self.state.__class__, Playing):
+            if self.clock_counter >= self.state.snake.update_counter:
+                self.clock_counter = 1
+                self.state.update()
+        else:
+            self.state.update()
 
     def draw(self):
         """Pass display surface to active state for drawing."""
