@@ -1,11 +1,13 @@
 import pygame
-
+from definitions import PX, L
 from state_machine.Control import Control
-from game_states import Snacks as S
+from game_states.Snacks import global_snack, snack_gameplay
+
 
 class GameControl(Control):
     def __init__(self, states, start_state, screen, fps):
         self.screen = screen
+        self.counter = 0
         self.clock = pygame.time.Clock()
         self.fps = fps
         super().__init__(states, start_state)
@@ -37,12 +39,11 @@ class GameControl(Control):
     def draw(self):
         """Pass display surface to active state for drawing."""
         self.state.draw(self.screen)
+        snack_gameplay(self.state_name, self.state, self.screen)
 
     def _flip_state(self):
         if self.state_name == 'Paused':
             self.state.next_state = 'Menu' if self.state.go_to_menu else self.previous_state
-            if self.state.next_state == 'Menu':
-                S.Snacks("CVAE: Você Trancou!", pygame.font.get_default_font(), 15, 16, 10, 'red', 5)
         self.previous_state = self.state_name
         super()._flip_state()
 

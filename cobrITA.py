@@ -3,7 +3,6 @@ import sys
 import pygame
 
 from definitions import PX, L
-from game_states.Snacks import Snacks
 from game_state_machine.GameControl import GameControl
 from game_states.Achievements import Achievements
 from game_states.Credits import Credits
@@ -19,7 +18,6 @@ fps = 5
 states = [Menu(), Credits('Menu'), Help('Menu'), Achievements('Menu'), MapSelection(),
           PlayingFeijao('Menu'), PlayingQuadra('Menu'), PlayingApart('Menu'), PlayingHall('Menu')]
 start_state = 'Menu'
-Snacks("DEU BOM CARALHO", 40, 50, 50, 'red', 3)
 game = GameControl(states, start_state, screen, fps)
 game.run()
 pygame.quit()
