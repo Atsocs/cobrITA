@@ -100,9 +100,10 @@ class Playing(GameState, ABC):
             color = pygame.Color("yellow")
         self.score_surf = f.render(score_text, True, color)
 
-    def draw(self, surface):
+    def draw(self, surface, draw_snake=True):
         self.map.draw(surface)
-        self.snake.draw(surface)
+        if draw_snake:
+            self.snake.draw(surface)
         self.food.draw(surface)
         for p in self.factory.collectable_powerups:
             p.draw(surface)

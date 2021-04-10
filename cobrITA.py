@@ -14,7 +14,7 @@ from game_states.Playing import PlayingFeijao, PlayingQuadra, PlayingApart, Play
 
 pygame.init()
 screen = pygame.display.set_mode(screen_size := (PX * L, PX * L))
-fps = 5
+fps = 60
 
 states = [Menu(),
           Credits('Menu'), Help('Menu'), Achievements('Menu'),

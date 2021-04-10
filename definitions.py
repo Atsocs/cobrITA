@@ -11,8 +11,8 @@ SPRITES_DIR = os.path.join(RESOURCES_DIR, 'sprites')
 PX = 32
 L = 20
 
-# factor that multiplies the fps while playing
-SNAKE_SPEED = 1
+# don't know how to define this!!!
+UPDATE_CONST = 12
 
 # pygame event for power-up creation
 CREATE_PWUP = pygame.event.custom_type()

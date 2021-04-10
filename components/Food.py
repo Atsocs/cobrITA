@@ -2,8 +2,8 @@ import random
 
 import pygame
 
-from definitions import L, PX
 from components.Spritesheet import Spritesheet
+from definitions import L, PX, UPDATE_CONST
 
 
 class Food:
@@ -28,10 +28,14 @@ class Food:
                 return
 
     def draw(self, surface: pygame.Surface):
+        if self.sprite_counter >= 2*UPDATE_CONST:
+            self.sprite_counter = 0
+
         sprite = self.get_sprite()
         pos = tuple((x * PX) for x in self.position)
         surface.blit(sprite, pos)
-        self.sprite_counter = (self.sprite_counter + 1) % self.num_sprites
+
+        self.sprite_counter += 1
 
     def get_sprite(self):
         frame_name = 'down_{}'.format(self.sprite_counter)
