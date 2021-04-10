@@ -67,6 +67,6 @@ class Snake:
     def get_sprite(self, d):
         possible_directions = [{'dir': self.__dict__[x], 'name': x} for x in ('up', 'down', 'left', 'right')]
         direction = next(x['name'] for x in possible_directions if x['dir'] == d)
-        frame_name = f'{direction}_{sprite_counter}'
+        frame_name = f'{direction}_{self.sprite_counter}'
         sprite = self.spritesheet.parse_sprite(frame_name)
         return sprite
