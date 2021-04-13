@@ -45,24 +45,20 @@ class Menu(GameState):
 
     def down(self):
         self.unselect(self.selected)
-        self.selected -= 1
-        if self.selected <= 0:
-            self.selected = len(self.menus) - 1
+        self.selected = 1 + (self.selected % (len(self.menus) - 1))
         self.select(self.selected)
 
     def up(self):
         self.unselect(self.selected)
-        self.selected += 1
-        if self.selected >= len(self.menus):
-            self.selected = 1
+        self.selected = (self.selected - 2) % (len(self.menus) - 1) + 1
         self.select(self.selected)
 
     def set_texts(self):
         f1, f2 = (self.fonts[x] for x in ('h1', 'h2'))
         self.title = f1.render(self.menus[0], True, pygame.Color("blue"))
         self.mapselec = f2.render(self.menus[1], True, pygame.Color("red"))
-        self.help = f2.render(self.menus[2], True, pygame.Color("yellow"))
-        self.credits = f2.render(self.menus[3], True, credits_color)
+        self.credits = f2.render(self.menus[2], True, credits_color)
+        self.help = f2.render(self.menus[3], True, pygame.Color("yellow"))
         self.achiev = f2.render(self.menus[4], True, achiev_color)
 
     def set_rect_centers(self):
@@ -70,14 +66,14 @@ class Menu(GameState):
 
         self.title_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 30)
         self.mapselec_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1])
-        self.help_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 20)
-        self.credits_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 40)
+        self.credits_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 20)
+        self.help_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 40)
         self.achiev_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 60)
 
         self.title_rect = self.title.get_rect(center=self.title_center)
         self.mapselec_rect = self.mapselec.get_rect(center=self.mapselec_center)
-        self.help_rect = self.help.get_rect(center=self.help_center)
         self.credits_rect = self.credits.get_rect(center=self.credits_center)
+        self.help_rect = self.help.get_rect(center=self.help_center)
         self.achiev_rect = self.achiev.get_rect(center=self.achiev_center)
 
     def select(self, idx):
