@@ -6,6 +6,7 @@ class State(object):
     def __init__(self, next_state=None):
         self.done = False
         self.quit = False
+        self.prev_state = None
         self.next_state = next_state
 
     def __str__(self):

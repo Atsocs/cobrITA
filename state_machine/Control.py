@@ -4,7 +4,6 @@ class Control(object):
         self.done = False
         self.states = states
         self.state_name = start_state
-        self.previous_state = None
         self.state = self.states[self.state_name]
         self.state.startup()
 
@@ -24,7 +23,8 @@ class Control(object):
         assert next_state is not None
         self.state.done = False
         self.state.cleanup()
-        self.previous_state = self.state_name
         self.state_name = next_state
+        prev_state = self.state
         self.state = self.states[self.state_name]
+        self.state.prev_state = prev_state
         self.state.startup()
