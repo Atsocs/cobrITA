@@ -15,11 +15,11 @@ class MapSelection(GameState):
 
         # Mensagem e Posição do canto superior esquerdo de cada botao
         self.buttons = [
-            {'name': 'hall', 'msg': '1', 'pos': (350, 200)},  # hall do A
-            {'name': 'feijao', 'msg': '2', 'pos': (200, 100)},  # feijao
-            {'name': 'quadra', 'msg': '3', 'pos': (200, 300)},  # quadra do C
-            {'name': 'apart', 'msg': '4', 'pos': (50, 200)},  # apart do C-
-            {'name': 'menu', 'msg': 'Menu', 'pos': (10, 10)},
+            {'name': 'hall', 'msg': '1', 'pos': (250, 200)},  # hall do A
+            {'name': 'feijao', 'msg': '2', 'pos': (250, 300)},  # feijao
+            {'name': 'quadra', 'msg': '3', 'pos': (250, 400)},  # quadra do C
+            {'name': 'apart', 'msg': '4', 'pos': (250, 500)},  # apart do C-
+            {'name': 'menu', 'msg': 'Menu', 'pos': (250, 100)},
         ]
 
         self.rects = [(pygame.Rect(b['pos'], self.button_size), b) for b in self.buttons]
