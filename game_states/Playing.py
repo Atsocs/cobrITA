@@ -71,7 +71,9 @@ class Playing(GameState, ABC):
         }
         if e.key in d:
             self.snake.turn(d[e.key])
-        elif e.key == K_ESCAPE:
+        elif e.key in [K_ESCAPE, K_p]:
+            self.next_state = "Paused"
+            self.paused = True
             self.done = True
 
     def on_mouse_up(self, e):
