@@ -25,6 +25,7 @@ class Paused(GameState):
 
     def draw(self, surface):
         surface.fill(background_color)
+
         surface.blit(self.title, self.title_rect)
         surface.blit(self.resume, self.resume_rect)
         surface.blit(self.exit, self.exit_rect)
