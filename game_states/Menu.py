@@ -53,6 +53,7 @@ class Menu(GameState):
         self.selected = (self.selected - 2) % (len(self.menus) - 1) + 1
         self.select(self.selected)
 
+    # noinspection DuplicatedCode
     def set_texts(self):
         f1, f2 = (self.fonts[x] for x in ('h1', 'h2'))
         self.title = f1.render(self.menus[0], True, pygame.Color("blue"))
@@ -61,6 +62,7 @@ class Menu(GameState):
         self.help = f2.render(self.menus[3], True, pygame.Color("yellow"))
         self.achiev = f2.render(self.menus[4], True, achiev_color)
 
+    # noinspection DuplicatedCode
     def set_rect_centers(self):
         self.set_texts()
 
