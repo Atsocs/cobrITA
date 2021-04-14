@@ -76,7 +76,7 @@ class Menu(GameState):
         self.help_rect = self.help.get_rect(center=self.help_center)
         self.achiev_rect = self.achiev.get_rect(center=self.achiev_center)
 
-    def select(self, idx):
+    def select(self, idx):  # TODO: abstract w.r.t. Paused
         self.menus[idx] = '< ' + self.menus[idx] + ' >'
 
     def unselect(self, idx):
