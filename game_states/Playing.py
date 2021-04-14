@@ -12,7 +12,6 @@ from components.Food import Food
 from components.Map import Map
 from definitions import MAPS_DIR
 from game_state_machine.GameState import GameState
-from game_states.Snacks import global_snack
 
 
 class Playing(GameState, ABC):
@@ -81,7 +80,6 @@ class Playing(GameState, ABC):
 
     def on_collision(self):
         self.next_state = 'Menu'
-        # global_snack.special()
         self.done = True
 
 
