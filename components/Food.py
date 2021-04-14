@@ -28,7 +28,7 @@ class Food:
                 return
 
     def draw(self, surface: pygame.Surface):
-        if self.sprite_counter >= 2*UPDATE_CONST:
+        if self.sprite_counter >= self.num_sprites*UPDATE_CONST:
             self.sprite_counter = 0
 
         sprite = self.get_sprite()
@@ -38,6 +38,6 @@ class Food:
         self.sprite_counter += 1
 
     def get_sprite(self):
-        frame_name = 'down_{}'.format(self.sprite_counter)
+        frame_name = 'down_{}'.format(self.sprite_counter//UPDATE_CONST)
         sprite = self.spritesheet.parse_sprite(frame_name)
         return sprite

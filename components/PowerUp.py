@@ -1,3 +1,7 @@
+#
+# WARNING: SPRITES MUST BE UPDATED!!!
+#
+
 import random
 import os
 
@@ -49,7 +53,7 @@ class PowerUp:
         """
         if self.effect_key == 0:
             # increases snake speed by a factor of 2
-            snake.update_counter = UPDATE_CONST/2
+            snake.update_counter = UPDATE_CONST//2
             pygame.time.set_timer(STOP_EFFECT, self.duration, True)
         elif self.effect_key == 1:
             snake.reverse()
