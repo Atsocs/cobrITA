@@ -1,5 +1,4 @@
 import pygame
-from definitions import PX, L
 from state_machine.Control import Control
 
 
@@ -42,4 +41,3 @@ class GameControl(Control):
     def _flip_state(self):
         self.previous_state = self.state_name
         super()._flip_state()
-
