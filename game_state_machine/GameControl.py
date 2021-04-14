@@ -1,5 +1,4 @@
 import pygame
-
 from state_machine.Control import Control
 
 

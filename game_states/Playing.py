@@ -16,9 +16,7 @@ from game_state_machine.GameState import GameState
 class Playing(GameState, ABC):
     def __init__(self, next_state):
         super().__init__(next_state)
-        self.startup()
-        self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
-        self.score_rect.move_ip(10, 10)
+        self.paused = False
 
     def get_map(self, map_name):
         tmxpath = os.path.join(MAPS_DIR, 'tmx', map_name + '.tmx')
@@ -26,11 +24,15 @@ class Playing(GameState, ABC):
         self.map = Map(map_name, tmxdata)
 
     def startup(self):
+        if self.paused:  # came from Paused state
+            return
         self.snake = Snake()
         self.food = Food()
         self.update_score()
 
     def cleanup(self):
+        if self.paused:  # called by Paused state
+            return
         del self.snake
         del self.food
 
@@ -51,6 +53,8 @@ class Playing(GameState, ABC):
         score_text = "Score: {}".format(score)
         f = self.fonts['h2']
         self.score_surf = f.render(score_text, True, pygame.Color("yellow"))
+        self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
+        self.score_rect.move_ip(10, 10)
 
     def draw(self, surface):
         self.map.draw(surface)
@@ -67,35 +71,38 @@ class Playing(GameState, ABC):
         }
         if e.key in d:
             self.snake.turn(d[e.key])
-        elif e.key == K_ESCAPE:
+        elif e.key in [K_ESCAPE, K_p]:
+            self.next_state = "Paused"
+            self.paused = True
             self.done = True
 
     def on_mouse_up(self, e):
         pass
 
     def on_collision(self):
+        self.next_state = 'Menu'
         self.done = True
 
 
 class PlayingFeijao(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='feijao')
 
 
 class PlayingHall(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='hall')
 
 
 class PlayingQuadra(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='quadra')
 
 
 class PlayingApart(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='apart')

@@ -24,5 +24,7 @@ class Control(object):
         self.state.done = False
         self.state.cleanup()
         self.state_name = next_state
+        prev_state = self.state
         self.state = self.states[self.state_name]
+        self.state.prev_state = prev_state
         self.state.startup()
