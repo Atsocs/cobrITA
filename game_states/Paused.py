@@ -70,11 +70,17 @@ class Paused(GameState):
         self.resume_rect = self.resume.get_rect(center=self.resume_center)
         self.exit_rect = self.exit.get_rect(center=self.exit_center)
 
-    def select(self, idx):
-        self.options[idx] = '< ' + self.options[idx] + ' >'
+    def select(self, idx, inplace=True):
+        selected = '< ' + self.options[idx] + ' >'
+        if inplace:
+            self.options[idx] = selected
+        return selected
 
-    def unselect(self, idx):
-        self.options[idx] = self.options[idx][2:-2]
+    def unselect(self, idx, inplace=True):
+        unselected = self.options[idx][2:-2]
+        if inplace:
+            self.options[idx] = unselected
+        return unselected
 
     @staticmethod
     def to_gamestate(string):
