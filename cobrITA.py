@@ -21,6 +21,7 @@ states = [Menu(),
           MapSelection(), Paused(),
           PlayingFeijao(), PlayingQuadra(), PlayingApart(), PlayingHall()]
 start_state = 'Menu'
+
 game = GameControl(states, start_state, screen, fps)
 game.run()
 pygame.quit()
