@@ -81,7 +81,7 @@ class Playing(GameState, ABC):
 
     def on_collision(self):
         self.next_state = 'Menu'
-        global_snack.special()
+        # global_snack.special()
         self.done = True
 
 
