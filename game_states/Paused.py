@@ -87,7 +87,3 @@ class Paused(GameState):
         if inplace:
             self.options[idx] = unselected
         return unselected
-
-    @staticmethod
-    def to_gamestate(string):
-        return string.title().replace('<', '').replace('>', '').replace(' ', '')
