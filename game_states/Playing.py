@@ -18,7 +18,6 @@ from game_states.Snacks import global_snack
 class Playing(GameState, ABC):
     def __init__(self, next_state):
         super().__init__(next_state)
-        self.startup()
 
     def get_map(self, map_name):
         tmxpath = os.path.join(MAPS_DIR, 'tmx', map_name + '.tmx')
