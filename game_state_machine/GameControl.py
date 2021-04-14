@@ -36,7 +36,3 @@ class GameControl(Control):
     def draw(self):
         """Pass display surface to active state for drawing."""
         self.state.draw(self.screen)
-
-    def _flip_state(self):
-        self.previous_state = self.state_name
-        super()._flip_state()
