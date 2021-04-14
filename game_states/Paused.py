@@ -43,16 +43,12 @@ class Paused(GameState):
 
     def down(self):
         self.unselect(self.selected)
-        self.selected += 1
-        if self.selected >= len(self.options):
-            self.selected = 1
+        self.selected = 1 + (self.selected % (len(self.options) - 1))
         self.select(self.selected)
 
-    def up(self):
+    def up(self):  # todo: abstract it w.r.t Menu class
         self.unselect(self.selected)
-        self.selected -= 1
-        if self.selected <= 0:
-            self.selected = len(self.options) - 1
+        self.selected = (self.selected - 2) % (len(self.options) - 1) + 1
         self.select(self.selected)
 
     def set_texts(self):
