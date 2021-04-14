@@ -5,7 +5,6 @@ from state_machine.Control import Control
 class GameControl(Control):
     def __init__(self, states, start_state, screen, fps):
         self.screen = screen
-        self.counter = 0
         self.clock = pygame.time.Clock()
         self.fps = fps
         super().__init__(states, start_state)
