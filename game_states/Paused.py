@@ -5,7 +5,7 @@ from definitions import background_color
 from game_state_machine.GameState import GameState
 
 
-class Paused (GameState):
+class Paused(GameState):
     def __init__(self):
         super().__init__()
         self.options = ["Paused", "Resume", "Exit"]
