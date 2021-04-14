@@ -13,7 +13,7 @@ PX = 32
 L = 20
 
 # don't know how to define this!!!
-UPDATE_CONST = 12
+UPDATE_CONST = 15
 
 # pygame event for power-up creation
 CREATE_PWUP = pygame.event.custom_type()
