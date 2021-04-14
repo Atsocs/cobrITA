@@ -37,7 +37,7 @@ class Menu(GameState):
         elif e.key in [K_UP, K_LEFT]:
             self.up()
         elif e.key in [K_RETURN, K_KP_ENTER, K_SPACE]:
-            self.next_state = self.unselect(self.selected, inplace=False)
+            self.next_state = self.unselect(self.selected, inplace=False).replace(' ', '')
             self.done = True
 
     def on_mouse_up(self, e):
