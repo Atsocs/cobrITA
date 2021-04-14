@@ -84,24 +84,24 @@ class Playing(GameState, ABC):
 
 
 class PlayingFeijao(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='feijao')
 
 
 class PlayingHall(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='hall')
 
 
 class PlayingQuadra(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='quadra')
 
 
 class PlayingApart(Playing):
-    def __init__(self, next_state):
+    def __init__(self, next_state=None):
         super().__init__(next_state)
         self.get_map(map_name='apart')
