@@ -6,13 +6,11 @@ from pytmx import load_pygame
 
 from pygame.locals import *
 
-from definitions import PX, L
 from components.Snake import Snake
 from components.Food import Food
 from components.Map import Map
 from definitions import MAPS_DIR
 from game_state_machine.GameState import GameState
-from game_states.Snacks import global_snack
 
 
 class Playing(GameState, ABC):
@@ -26,15 +24,17 @@ class Playing(GameState, ABC):
         self.map = Map(map_name, tmxdata)
 
     def startup(self):
-        if not self.paused:
-            self.snake = Snake()
-            self.food = Food()
-            self.update_score()
+        if self.paused:  # came from Paused state
+            return
+        self.snake = Snake()
+        self.food = Food()
+        self.update_score()
 
     def cleanup(self):
-        if not self.paused:
-            del self.snake
-            del self.food
+        if self.paused:  # called by Paused state
+            return
+        del self.snake
+        del self.food
 
     def update(self):
         collided = self.snake.move()
@@ -49,8 +49,8 @@ class Playing(GameState, ABC):
         self.update_score()
 
     def update_score(self):
-        self.score = self.snake.length - 1
-        score_text = "Score: {}".format(self.score)
+        score = self.snake.length - 1
+        score_text = "Score: {}".format(score)
         f = self.fonts['h2']
         self.score_surf = f.render(score_text, True, pygame.Color("yellow"))
         self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
@@ -80,8 +80,6 @@ class Playing(GameState, ABC):
         pass
 
     def on_collision(self):
-        self.next_state = 'Menu'
-        # global_snack.special()
         self.done = True
 
 

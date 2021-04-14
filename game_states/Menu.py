@@ -37,7 +37,7 @@ class Menu(GameState):
         elif e.key in [K_UP, K_LEFT]:
             self.up()
         elif e.key in [K_RETURN, K_KP_ENTER, K_SPACE]:
-            self.next_state = self.to_class(self.menus[self.selected])
+            self.next_state = self.unselect(self.selected, inplace=False)
             self.done = True
 
     def on_mouse_up(self, e):
@@ -53,6 +53,7 @@ class Menu(GameState):
         self.selected = (self.selected - 2) % (len(self.menus) - 1) + 1
         self.select(self.selected)
 
+    # noinspection DuplicatedCode
     def set_texts(self):
         f1, f2 = (self.fonts[x] for x in ('h1', 'h2'))
         self.title = f1.render(self.menus[0], True, pygame.Color("blue"))
@@ -61,6 +62,7 @@ class Menu(GameState):
         self.help = f2.render(self.menus[3], True, pygame.Color("yellow"))
         self.achiev = f2.render(self.menus[4], True, achiev_color)
 
+    # noinspection DuplicatedCode
     def set_rect_centers(self):
         self.set_texts()
 
@@ -76,12 +78,14 @@ class Menu(GameState):
         self.help_rect = self.help.get_rect(center=self.help_center)
         self.achiev_rect = self.achiev.get_rect(center=self.achiev_center)
 
-    def select(self, idx):  # TODO: abstract w.r.t. Paused
-        self.menus[idx] = '< ' + self.menus[idx] + ' >'
+    def select(self, idx, inplace=True):
+        selected = '< ' + self.menus[idx] + ' >'
+        if inplace:
+            self.menus[idx] = selected
+        return selected
 
-    def unselect(self, idx):
-        self.menus[idx] = self.menus[idx][2:-2]
-
-    @staticmethod
-    def to_class(string):
-        return string.title().replace('<', '').replace('>', '').replace(' ', '')
+    def unselect(self, idx, inplace=True):
+        unselected = self.menus[idx][2:-2]
+        if inplace:
+            self.menus[idx] = unselected
+        return unselected

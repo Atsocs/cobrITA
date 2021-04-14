@@ -12,7 +12,6 @@ class Paused(GameState):
 
     def startup(self):
         self.selected = 1
-        self.go_to_menu = False
         self.select(self.selected)
         self.update()
 
@@ -25,6 +24,7 @@ class Paused(GameState):
 
     def draw(self, surface):
         surface.fill(background_color)
+
         surface.blit(self.title, self.title_rect)
         surface.blit(self.resume, self.resume_rect)
         surface.blit(self.exit, self.exit_rect)
@@ -57,17 +57,21 @@ class Paused(GameState):
         self.selected = (self.selected - 2) % (len(self.options) - 1) + 1
         self.select(self.selected)
 
+    # noinspection DuplicatedCode
     def set_texts(self):
         f1, f2 = (self.fonts[x] for x in ('h1', 'h2'))
         self.title = f1.render(self.options[0], True, pygame.Color("blue"))
         self.resume = f2.render(self.options[1], True, pygame.Color("red"))
         self.exit = f2.render(self.options[2], True, pygame.Color("green"))
 
+    # noinspection DuplicatedCode
     def set_rect_centers(self):
         self.set_texts()
+
         self.title_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 30)
         self.resume_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1])
         self.exit_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 20)
+
         self.title_rect = self.title.get_rect(center=self.title_center)
         self.resume_rect = self.resume.get_rect(center=self.resume_center)
         self.exit_rect = self.exit.get_rect(center=self.exit_center)
@@ -83,7 +87,3 @@ class Paused(GameState):
         if inplace:
             self.options[idx] = unselected
         return unselected
-
-    @staticmethod
-    def to_gamestate(string):
-        return string.title().replace('<', '').replace('>', '').replace(' ', '')
