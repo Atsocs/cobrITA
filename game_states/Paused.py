@@ -35,7 +35,13 @@ class Paused(GameState):
         elif e.key in [K_UP, K_LEFT]:
             self.up()
         elif e.key in [K_RETURN, K_KP_ENTER, K_SPACE]:
-            selected_text = self.options[self.selected]
+            selected_text = self.unselect(self.selected, inplace=False)
+            if selected_text == 'Resume':
+                self.next_state = self.prev_state.__class__.__name__
+            elif selected_text == 'Exit':
+                self.prev_state.paused = False
+                self.prev_state.cleanup()
+                self.next_state = 'Menu'
             self.done = True
 
     def on_mouse_up(self, e):
