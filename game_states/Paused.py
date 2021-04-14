@@ -12,7 +12,6 @@ class Paused(GameState):
 
     def startup(self):
         self.selected = 1
-        self.go_to_menu = False
         self.select(self.selected)
         self.update()
 
