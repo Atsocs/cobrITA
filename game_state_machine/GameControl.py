@@ -42,8 +42,6 @@ class GameControl(Control):
         snack_gameplay(self.state_name, self.state, self.screen)
 
     def _flip_state(self):
-        if self.state_name == 'Paused':
-            self.state.next_state = 'Menu' if self.state.go_to_menu else self.previous_state
         self.previous_state = self.state_name
         super()._flip_state()
 
