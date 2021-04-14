@@ -18,6 +18,7 @@ from game_states.Snacks import global_snack
 class Playing(GameState, ABC):
     def __init__(self, next_state):
         super().__init__(next_state)
+        self.paused = False
 
     def get_map(self, map_name):
         tmxpath = os.path.join(MAPS_DIR, 'tmx', map_name + '.tmx')
@@ -25,13 +26,15 @@ class Playing(GameState, ABC):
         self.map = Map(map_name, tmxdata)
 
     def startup(self):
-        self.snake = Snake()
-        self.food = Food()
-        self.update_score()
+        if not self.paused:
+            self.snake = Snake()
+            self.food = Food()
+            self.update_score()
 
     def cleanup(self):
-        del self.snake
-        del self.food
+        if not self.paused:
+            del self.snake
+            del self.food
 
     def update(self):
         collided = self.snake.move()
