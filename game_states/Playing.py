@@ -24,15 +24,17 @@ class Playing(GameState, ABC):
         self.map = Map(map_name, tmxdata)
 
     def startup(self):
-        if not self.paused:
-            self.snake = Snake()
-            self.food = Food()
-            self.update_score()
+        if self.paused:  # came from Paused state
+            return
+        self.snake = Snake()
+        self.food = Food()
+        self.update_score()
 
     def cleanup(self):
-        if not self.paused:
-            del self.snake
-            del self.food
+        if self.paused:  # called by Paused state
+            return
+        del self.snake
+        del self.food
 
     def update(self):
         collided = self.snake.move()
