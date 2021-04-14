@@ -6,7 +6,6 @@ from pytmx import load_pygame
 
 from pygame.locals import *
 
-from definitions import PX, L
 from components.Snake import Snake
 from components.Food import Food
 from components.Map import Map
