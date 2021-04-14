@@ -58,7 +58,7 @@ class Snake:
             return False
 
     def draw(self, surface: pygame.Surface):
-        if self.sprite_counter >= 2*self.update_counter:
+        if self.sprite_counter >= self.num_sprites*self.update_counter:
             self.sprite_counter = 0
 
         for pos, direction in zip(self.body, self.directions):
@@ -71,7 +71,7 @@ class Snake:
     def get_sprite(self, d):
         possible_directions = [{'dir': self.__dict__[x], 'name': x} for x in ('up', 'down', 'left', 'right')]
         direction = next(x['name'] for x in possible_directions if x['dir'] == d)
-        frame_name = f'{direction}_{self.sprite_counter}'
+        frame_name = f'{direction}_{self.sprite_counter//self.update_counter}'
         sprite = self.spritesheet.parse_sprite(frame_name)
         return sprite
 

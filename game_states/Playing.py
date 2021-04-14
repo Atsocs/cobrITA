@@ -10,8 +10,11 @@ from components.Snake import Snake
 from components.Food import Food
 from components.Map import Map
 from components.PowerUpFactory import PowerUpFactory
-from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT, MAX_SCORES
+from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT, MAX_SCORES, GRADES
 from game_state_machine.GameState import GameState
+
+# interval time to CREATE_PWUP event
+PWUP_INTERVAL = 5000
 
 
 class Playing(GameState, ABC):
@@ -30,9 +33,8 @@ class Playing(GameState, ABC):
         self.snake = Snake()
         self.food = Food()
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
-        # interval time to CREATE_PWUP event
-        interval = 5000
-        pygame.time.set_timer(CREATE_PWUP, interval)
+        self.interval = PWUP_INTERVAL
+        pygame.time.set_timer(CREATE_PWUP, self.interval)
         self.active_powerups = []
         self.update_score()
 
@@ -70,20 +72,15 @@ class Playing(GameState, ABC):
         # legend -> cancer area
         fail = legend = False
 
-        if sc >= 0.95:
-            score = 'L'
+        for k, v in GRADES.items():
+            if sc >= v:
+                score = k
+                break
+
+        if score == 'L':
             legend = True
-        elif sc >= 0.85:
-            score = 'MB'
-        elif sc >= 0.75:
-            score = 'B'
-        elif sc >= 0.65:
-            score = 'R'
-        elif sc >= 0.5:
-            score = 'I'
-            fail = True
-        else:
-            score = 'D'
+
+        if score in ['I', 'D']:
             fail = True
 
         score_text = "Score: {}".format(score)
