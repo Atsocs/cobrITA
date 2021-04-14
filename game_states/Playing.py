@@ -49,8 +49,8 @@ class Playing(GameState, ABC):
         self.update_score()
 
     def update_score(self):
-        self.score = self.snake.length - 1
-        score_text = "Score: {}".format(self.score)
+        score = self.snake.length - 1
+        score_text = "Score: {}".format(score)
         f = self.fonts['h2']
         self.score_surf = f.render(score_text, True, pygame.Color("yellow"))
         self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
