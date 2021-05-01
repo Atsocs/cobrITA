@@ -8,7 +8,7 @@ from pygame.locals import *
 class Help(GameState):
     def __init__(self):
         super().__init__()
-        self.speed_text = "1. The rookie chain (our adapted snake) has a constant a non-zero speed."
+        self.speed_text = "1. The rookie chain (our adapted snake) has a constant non-zero speed."
         self.direction_text = "2. For orientation use the arrow keys in your keyboard."
         self.pause_text = "3. Press 'esc' to pause (you don't lose progress)."
         self.rules_text = "4. To upgrade your score, collect more rookies (1 rookie = 1 score point)."
