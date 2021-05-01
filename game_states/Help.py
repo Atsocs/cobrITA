@@ -14,7 +14,7 @@ class Help(GameState):
         self.rules_text = "4. To upgrade your score, collect more rookies (1 rookie = 1 score point)."
         self.boundary_text = "5. The map boundaries can do you harm, watch out!"
         self.final_text = "6. Press any key to go back to the Main Menu."
-        self.texts = ["Help", self.speed_text, self.direction_text, self.pause_text,
+        self.texts = ["Help Menu", self.speed_text, self.direction_text, self.pause_text,
                       self.rules_text, self.boundary_text, self.final_text]
 
     def startup(self):
@@ -28,7 +28,9 @@ class Help(GameState):
         self.set_rect_centers()
 
     def draw(self, surface):
+        rect = pygame.Rect(20, 200, 600, 240)
         surface.fill(background_color)
+        pygame.draw.rect(surface, "orange", rect, width=2, border_radius=1)
         surface.blit(self.title, self.title_rect)
         surface.blit(self.speed, self.speed_rect)
         surface.blit(self.direction, self.direction_rect)
@@ -54,7 +56,7 @@ class Help(GameState):
     # noinspection DuplicatedCode
     def set_texts(self):
         f1, f2 = (self.fonts[x] for x in ('h1', 'h2'))
-        self.title = f1.render(self.texts[0], True, pygame.Color("blue"))
+        self.title = f1.render(self.texts[0], True, pygame.Color("green"))
         self.speed = f2.render(self.texts[1], True, pygame.Color("yellow"))
         self.direction = f2.render(self.texts[2], True, pygame.Color("yellow"))
         self.pause = f2.render(self.texts[3], True, pygame.Color("yellow"))
@@ -66,13 +68,13 @@ class Help(GameState):
     def set_rect_centers(self):
         self.set_texts()
 
-        self.title_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 30)
-        self.speed_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1])
-        self.direction_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 20)
-        self.pause_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 40)
-        self.rules_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 60)
-        self.boundary_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 80)
-        self.final_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 100)
+        self.title_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 90)
+        self.speed_center = (320, self.get_screen_rect().center[1] - 60)
+        self.direction_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 30)
+        self.pause_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1])
+        self.rules_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 30)
+        self.boundary_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 60)
+        self.final_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 90)
 
         self.title_rect = self.title.get_rect(center=self.title_center)
         self.speed_rect = self.speed.get_rect(center=self.speed_center)
