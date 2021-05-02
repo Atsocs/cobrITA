@@ -7,22 +7,29 @@ from game_state_machine.GameState import GameState
 class MapSelection(GameState):
     def __init__(self):
         super().__init__()
-        self.button_size = 100, 50
+        self.button_size = 60, 30
 
         # Cores utilizadas no MapSelection
         self.button_color = pygame.Color("yellow")
         self.color_when_clicked = pygame.Color("white")
+        r = self.get_screen_rect()
+        K = 50
+
+        def f(i):
+            s = pygame.Rect((0, 0), self.button_size)
+            s.center = r.move(0, i * K).center
+            return s
 
         # Mensagem e Posição do canto superior esquerdo de cada botao
         self.buttons = [
-            {'name': 'hall', 'msg': '1', 'pos': (265, 190)},  # hall do A
-            {'name': 'feijao', 'msg': '2', 'pos': (265, 290)},  # feijao
-            {'name': 'quadra', 'msg': '3', 'pos': (265, 390)},  # quadra do C
-            {'name': 'apart', 'msg': '4', 'pos': (265, 490)},  # apart do C-
-            {'name': 'menu', 'msg': 'Menu', 'pos': (265, 90)},
+            {'name': 'hall', 'msg': '1', 'pos': f(-2)},  # hall do A
+            {'name': 'feijao', 'msg': '2', 'pos': f(-1)},  # feijao
+            {'name': 'quadra', 'msg': '3', 'pos': f(0)},  # quadra do C
+            {'name': 'apart', 'msg': '4', 'pos': f(1)},  # apart do C-
+            {'name': 'menu', 'msg': 'Menu', 'pos': f(2)},
         ]
 
-        self.rects = [(pygame.Rect(b['pos'], self.button_size), b) for b in self.buttons]
+        self.rects = [(b['pos'], b) for b in self.buttons]
 
     def startup(self):
         pass
@@ -47,7 +54,7 @@ class MapSelection(GameState):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed(num_buttons=3)
 
-        rect = pygame.Rect(pos, self.button_size)
+        rect = pos
         inside = rect.collidepoint(mouse)
         color = self.color_when_clicked if inside else self.button_color
         pygame.draw.rect(surface, color, rect)
