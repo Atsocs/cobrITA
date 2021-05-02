@@ -20,7 +20,7 @@ class Menu(GameState):
 
     def update(self):
         self.set_texts()
-        self.set_rect_centers()
+        self.set_rects()
 
     def draw(self, surface):
         surface.fill(background_color)
@@ -59,7 +59,7 @@ class Menu(GameState):
         self.help = f2.render(self.menus[2], True, pygame.Color("yellow"))
 
     # noinspection DuplicatedCode
-    def set_rect_centers(self):
+    def set_rects(self):
         self.set_texts()
 
         self.title_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 30)
@@ -69,6 +69,12 @@ class Menu(GameState):
         self.title_rect = self.title.get_rect(center=self.title_center)
         self.mapselec_rect = self.mapselec.get_rect(center=self.mapselec_center)
         self.help_rect = self.help.get_rect(center=self.help_center)
+
+        self.hat_topleft = (self.get_screen_rect().bottomright[0] - 150, self.get_screen_rect().bottomright[1] - 150)
+        self.animation_topleft = (self.title_rect.x + 100, self.title_rect.y)
+
+        self.hat_rect = pygame.Rect(self.hat_topleft, (128, 128))
+        self.animation_rect = pygame.Rect(self.animation_topleft, (32, 32))
 
     def select(self, idx, inplace=True):
         selected = '< ' + self.menus[idx] + ' >'
