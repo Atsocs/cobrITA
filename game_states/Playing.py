@@ -25,7 +25,7 @@ class Playing(GameState, ABC):
     def get_map(self, map_name):
         tmxpath = os.path.join(MAPS_DIR, 'tmx', map_name + '.tmx')
         tmxdata = load_pygame(tmxpath)
-        self.map = Map(map_name, tmxdata, None, d=3)
+        self.map = Map(map_name, tmxdata, d=3)
 
     def startup(self):
         if self.paused:  # came from Paused state
