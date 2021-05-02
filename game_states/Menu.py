@@ -64,7 +64,7 @@ class Menu(GameState):
 
         self.title_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 30)
         self.mapselec_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1])
-        self.help_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 40)
+        self.help_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 20)
 
         self.title_rect = self.title.get_rect(center=self.title_center)
         self.mapselec_rect = self.mapselec.get_rect(center=self.mapselec_center)
