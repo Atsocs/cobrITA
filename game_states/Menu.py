@@ -5,6 +5,7 @@ from pygame.locals import *
 from definitions import background_color, UPDATE_CONST, SPRITES_DIR
 from game_state_machine.GameState import GameState
 from components.Spritesheet import Spritesheet
+from utils import sound_path
 
 
 class Menu(GameState):
@@ -16,6 +17,8 @@ class Menu(GameState):
         self.sprite_counter = 0
         hat_path = os.path.join(SPRITES_DIR, 'chapeu_magicos.png')
         self.hat = pygame.image.load(hat_path).convert_alpha()
+        self.select_sound = pygame.mixer.Sound(sound_path('select.ogg'))
+        self.enter_sound = pygame.mixer.Sound(sound_path('enter.ogg'))
 
     def startup(self):
         self.selected = 1
@@ -49,10 +52,13 @@ class Menu(GameState):
     def on_key_up(self, e):
         if e.key in [K_DOWN, K_RIGHT]:
             self.down()
+            self.select_sound.play()
         elif e.key in [K_UP, K_LEFT]:
             self.up()
+            self.select_sound.play()
         elif e.key in [K_RETURN, K_KP_ENTER, K_SPACE]:
             self.next_state = self.unselect(self.selected, inplace=False).replace(' ', '')
+            self.enter_sound.play()
             self.done = True
 
     def on_mouse_up(self, e):

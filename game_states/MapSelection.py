@@ -3,6 +3,7 @@ from pygame.locals import *
 
 from definitions import background_color
 from game_state_machine.GameState import GameState
+from utils import sound_path
 
 
 class MapSelection(GameState):
@@ -31,6 +32,9 @@ class MapSelection(GameState):
         ]
 
         self.rects = [(b['pos'], b) for b in self.buttons]
+        self.select_sound = pygame.mixer.Sound(sound_path('select.ogg'))
+        self.enter_sound = pygame.mixer.Sound(sound_path('enter.ogg'))
+        self.hover = False
 
     def startup(self):
         pass
@@ -70,16 +74,19 @@ class MapSelection(GameState):
         if K_1 <= e.key <= K_4:
             selected = str(e.key - K_1 + 1)
             button = next(b for b in self.buttons if b['msg'] == selected)
+            self.enter_sound.play()
             self.next_state = self.get_gameplay_state(button)
             self.done = True
         elif e.key == K_m:
             self.next_state = 'Menu'
+            self.enter_sound.play()
             self.done = True
 
     def on_mouse_up(self, e):
         if e.button == 1:
             collided, next_state = self.get_collisions(e.pos)
             if collided:
+                self.enter_sound.play()
                 self.next_state = next_state
                 self.done = True
 
@@ -94,6 +101,18 @@ class MapSelection(GameState):
                     next_state = msg
                 return True, next_state
         return False, None
+
+    def get_event(self, event):
+        if event.type == pygame.MOUSEMOTION:
+            previous = self.hover
+            self.hover = False
+            for rect, button in self.rects:
+                if rect.collidepoint(event.pos):
+                    self.hover = True
+            if self.hover and not previous:
+                self.select_sound.play()
+
+        super(MapSelection, self).get_event(event)
 
     @staticmethod
     def get_gameplay_state(button):

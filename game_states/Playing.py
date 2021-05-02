@@ -36,6 +36,7 @@ class Playing(GameState, ABC):
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         self.gain_sound = pygame.mixer.Sound(sound_path('aumentou.ogg'))
         self.powerup_sound = pygame.mixer.Sound(sound_path('powerup.ogg'))
+        self.enter_sound = pygame.mixer.Sound(sound_path('enter.ogg'))
         self.interval = PWUP_INTERVAL
         pygame.time.set_timer(CREATE_PWUP, self.interval)
         self.active_powerups = []
@@ -122,6 +123,7 @@ class Playing(GameState, ABC):
             self.snake.turn(d[e.key])
         elif e.key in [K_ESCAPE, K_p]:
             self.next_state = "Paused"
+            self.enter_sound.play()
             self.paused = True
             self.done = True
 

@@ -3,12 +3,15 @@ from pygame.locals import *
 
 from definitions import background_color
 from game_state_machine.GameState import GameState
+from utils import sound_path
 
 
 class Paused(GameState):
     def __init__(self):
         super().__init__()
         self.options = ["Paused", "Resume", "Exit"]
+        self.select_sound = pygame.mixer.Sound(sound_path('select.ogg'))
+        self.enter_sound = pygame.mixer.Sound(sound_path('enter.ogg'))
 
     def startup(self):
         self.selected = 1
@@ -32,8 +35,10 @@ class Paused(GameState):
     def on_key_up(self, e):
         if e.key in [K_DOWN, K_RIGHT]:
             self.down()
+            self.select_sound.play()
         elif e.key in [K_UP, K_LEFT]:
             self.up()
+            self.select_sound.play()
         elif e.key in [K_RETURN, K_KP_ENTER, K_SPACE]:
             selected_text = self.unselect(self.selected, inplace=False)
             if selected_text == 'Resume':
@@ -42,6 +47,7 @@ class Paused(GameState):
                 self.prev_state.paused = False
                 self.prev_state.cleanup()
                 self.next_state = 'Menu'
+            self.enter_sound.play()
             self.done = True
 
     def on_mouse_up(self, e):

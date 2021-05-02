@@ -1,5 +1,6 @@
 from game_state_machine.GameState import GameState
 from definitions import background_color, L, PX
+from utils import sound_path
 import pygame
 
 
@@ -15,6 +16,7 @@ class Help(GameState):
         self.final_text = "6. Press any key to go back to the Main Menu."
         self.texts = ["Help Menu", self.speed_text, self.direction_text, self.pause_text,
                       self.rules_text, self.boundary_text, self.final_text]
+        self.enter_sound = pygame.mixer.Sound(sound_path('enter.ogg'))
 
     def startup(self):
         self.update()
@@ -42,6 +44,7 @@ class Help(GameState):
 
     def on_key_up(self, e):
         self.next_state = "Menu"
+        self.enter_sound.play()
         self.done = True
 
     def on_mouse_up(self, e):
