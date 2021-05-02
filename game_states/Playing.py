@@ -143,6 +143,7 @@ class Playing(GameState, ABC):
         tmxdata = load_pygame(tmxpath)
         self.map = Map(map_name, tmxdata, d=3)
 
+
 class PlayingFeijao(Playing):
     def __init__(self, next_state=None):
         super().__init__(next_state)
