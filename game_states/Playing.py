@@ -52,7 +52,9 @@ class Playing(GameState, ABC):
         if self.snake.get_head_position() == self.food.position:
             self.gain_sound.play()
             self.snake.length += 1
-            self.food.randomize_position(self.snake.body + self.factory.get_positions())
+            prohibited = self.snake.body + self.factory.get_positions()
+            prohibited += self.map.get_prohibited_list()
+            self.food.randomize_position(prohibited)
 
         for p in self.factory.collectable_powerups:
             if self.snake.get_head_position() == p.position:

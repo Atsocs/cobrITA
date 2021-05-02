@@ -33,7 +33,7 @@ class Map:
         result = []
         for x in range(self.w):
             for y in range(self.h):
-                if not self.is_free[x][y]:
+                if not self.is_free[y][x]:
                     result.append((x, y))
         self.prohibited = result
         return result
