@@ -7,10 +7,10 @@ from definitions import L, PX, UPDATE_CONST
 
 
 class Food:
-    def __init__(self):
+    def __init__(self, prohibited=None):
         self.position = (0, 0)
         self.board_width = self.board_height = L
-        self.randomize_position()
+        self.randomize_position(prohibited)
 
         self.sprite_counter = 0
         self.num_sprites = 4

@@ -31,7 +31,7 @@ class Playing(GameState, ABC):
         if self.paused:  # came from Paused state
             return
         self.snake = Snake()
-        self.food = Food()
+        self.food = Food(prohibited=self.map.get_prohibited_list())
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         self.interval = PWUP_INTERVAL
         pygame.time.set_timer(CREATE_PWUP, self.interval)
@@ -53,7 +53,7 @@ class Playing(GameState, ABC):
 
         if self.snake.get_head_position() == self.food.position:
             self.snake.length += 1
-            self.food.randomize_position(self.snake.body + self.factory.get_positions())
+            self.randomize_fruit()
 
         for p in self.factory.collectable_powerups:
             if self.snake.get_head_position() == p.position:
@@ -129,13 +129,21 @@ class Playing(GameState, ABC):
 
     def get_event(self, event):
         if event.type == CREATE_PWUP:
-            prohibited = self.snake.body + self.factory.get_positions() + [self.food.position]
+            prohibited = self.snake.body
+            prohibited += self.factory.get_positions()
+            prohibited += [self.food.position]
+            prohibited += self.map.get_prohibited_list()
             self.factory.maybe_create_powerup(prohibited)
             return True
         if event.type == STOP_EFFECT:
             self.active_powerups.pop(0).reset_effect(self.snake)
             return True
         return super().get_event(event)
+
+    def randomize_fruit(self):
+        prohibited = self.snake.body + self.factory.get_positions()
+        prohibited += self.map.get_prohibited_list()
+        self.food.randomize_position(prohibited)
 
 
 class PlayingFeijao(Playing):
