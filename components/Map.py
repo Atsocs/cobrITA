@@ -10,6 +10,7 @@ class Map:
         self.tmxdata = tmxdata
         self.is_free = self.prohibited = None
         self.get_is_free()
+        self.get_prohibited_list()
 
     def draw(self, surface: pygame.Surface):
         for z in range(1, self.d):

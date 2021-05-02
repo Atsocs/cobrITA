@@ -6,6 +6,7 @@ class PowerUpFactory:
     """
     Class to control the power-up creation
     """
+
     def __init__(self, items, item_limit=3):
         """
         :param items: dict that contains the possible power-ups with different powers and probabilities

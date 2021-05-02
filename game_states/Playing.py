@@ -23,11 +23,6 @@ class Playing(GameState, ABC):
         super().__init__(next_state)
         self.paused = False
 
-    def get_map(self, map_name):
-        tmxpath = os.path.join(MAPS_DIR, 'tmx', map_name + '.tmx')
-        tmxdata = load_pygame(tmxpath)
-        self.map = Map(map_name, tmxdata, d=3)
-
     def startup(self):
         if self.paused:  # came from Paused state
             return
@@ -58,7 +53,9 @@ class Playing(GameState, ABC):
         if self.snake.get_head_position() == self.food.position:
             self.gain_sound.play()
             self.snake.length += 1
-            self.randomize_fruit()
+            prohibited = self.snake.body + self.factory.get_positions()
+            prohibited += self.map.get_prohibited_list()
+            self.food.randomize_position(prohibited)
 
         for p in self.factory.collectable_powerups:
             if self.snake.get_head_position() == p.position:
@@ -78,6 +75,7 @@ class Playing(GameState, ABC):
         # legend -> cancer area
         fail = legend = False
 
+        score = list(GRADES)[-1]
         for k, v in GRADES.items():
             if sc >= v:
                 score = k
@@ -136,9 +134,7 @@ class Playing(GameState, ABC):
 
     def get_event(self, event):
         if event.type == CREATE_PWUP:
-            prohibited = self.snake.body
-            prohibited += self.factory.get_positions()
-            prohibited += [self.food.position]
+            prohibited = self.snake.body + self.factory.get_positions() + [self.food.position]
             prohibited += self.map.get_prohibited_list()
             self.factory.maybe_create_powerup(prohibited)
             return True
@@ -147,10 +143,10 @@ class Playing(GameState, ABC):
             return True
         return super().get_event(event)
 
-    def randomize_fruit(self):
-        prohibited = self.snake.body + self.factory.get_positions()
-        prohibited += self.map.get_prohibited_list()
-        self.food.randomize_position(prohibited)
+    def get_map(self, map_name):
+        tmxpath = os.path.join(MAPS_DIR, 'tmx', map_name + '.tmx')
+        tmxdata = load_pygame(tmxpath)
+        self.map = Map(map_name, tmxdata, d=3)
 
 
 class PlayingFeijao(Playing):
