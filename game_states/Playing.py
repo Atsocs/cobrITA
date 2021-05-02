@@ -27,7 +27,7 @@ class Playing(GameState, ABC):
         if self.paused:  # came from Paused state
             return
         self.snake = Snake()
-        self.food = Food()
+        self.food = Food(prohibited=self.map.get_prohibited_list())
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         self.gain_sound = pygame.mixer.Sound(sound_path('aumentou.ogg'))
         self.powerup_sound = pygame.mixer.Sound(sound_path('powerup.ogg'))
