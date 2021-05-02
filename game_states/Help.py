@@ -1,5 +1,5 @@
 from game_state_machine.GameState import GameState
-from definitions import background_color
+from definitions import background_color, L, PX
 import pygame
 
 
@@ -27,9 +27,11 @@ class Help(GameState):
         self.set_rect_centers()
 
     def draw(self, surface):
-        rect = pygame.Rect(20, 200, 600, 240)
+        M = 20
+        border_rect = pygame.Rect((0, 0), (L * PX - 2 * M, L * PX - 2 * M)).inflate(0, -250)
+        border_rect.center = self.get_screen_rect().center
         surface.fill(background_color)
-        pygame.draw.rect(surface, "orange", rect, width=2, border_radius=1)
+        pygame.draw.rect(surface, "orange", border_rect, width=2, border_radius=1)
         surface.blit(self.title, self.title_rect)
         surface.blit(self.speed, self.speed_rect)
         surface.blit(self.direction, self.direction_rect)
@@ -53,7 +55,7 @@ class Help(GameState):
 
     # noinspection DuplicatedCode
     def set_texts(self):
-        f1, f2 = (self.fonts[x] for x in ('h1', 'h2'))
+        f1, f2 = (self.fonts[x] for x in ('h2', 'h3'))
         self.title = f1.render(self.texts[0], True, pygame.Color("green"))
         self.speed = f2.render(self.texts[1], True, pygame.Color("yellow"))
         self.direction = f2.render(self.texts[2], True, pygame.Color("yellow"))
@@ -66,13 +68,15 @@ class Help(GameState):
     def set_rect_centers(self):
         self.set_texts()
 
-        self.title_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 90)
-        self.speed_center = (320, self.get_screen_rect().center[1] - 60)
-        self.direction_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] - 30)
-        self.pause_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1])
-        self.rules_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 30)
-        self.boundary_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 60)
-        self.final_center = (self.get_screen_rect().center[0], self.get_screen_rect().center[1] + 90)
+        r = self.get_screen_rect()
+        K = 30
+        self.title_center = r.move(0, -3 * K).center
+        self.speed_center = r.move(0, -2 * K).center
+        self.direction_center = r.move(0, - 1 * K).center
+        self.pause_center = r.move(0, 0 * K).center
+        self.rules_center = r.move(0, 1 * K).center
+        self.boundary_center = r.move(0, 2 * K).center
+        self.final_center = r.move(0, 3 * K).center
 
         self.title_rect = self.title.get_rect(center=self.title_center)
         self.speed_rect = self.speed.get_rect(center=self.speed_center)
