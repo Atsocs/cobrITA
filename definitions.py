@@ -36,6 +36,8 @@ MAX_SCORES = {
 }
 
 GRADES = {
+    'XLL': 1.10,  # by Prof. Alonso
+    'XL': 1.00,  # by Prof. Alonso
     'L': 0.95,
     'MB': 0.85,
     'B': 0.75,

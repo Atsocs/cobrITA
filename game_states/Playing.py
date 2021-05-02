@@ -77,7 +77,7 @@ class Playing(GameState, ABC):
                 score = k
                 break
 
-        if score == 'L':
+        if score in ['L', 'XL', 'XLL']:
             legend = True
 
         if score in ['I', 'D']:
