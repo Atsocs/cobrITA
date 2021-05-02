@@ -7,6 +7,7 @@ RESOURCES_DIR = os.path.join(ROOT_DIR, 'resources')
 MAPS_DIR = os.path.join(RESOURCES_DIR, 'maps')
 TMX_DIR = os.path.join(MAPS_DIR, 'tmx')
 SPRITES_DIR = os.path.join(RESOURCES_DIR, 'sprites')
+SOUND_DIR = os.path.join(RESOURCES_DIR, "sound")
 POWERUPS_DIR = os.path.join(SPRITES_DIR, 'powerup')
 
 PX = 32
