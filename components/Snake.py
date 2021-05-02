@@ -1,9 +1,9 @@
 import random
-
 import pygame
 
 from definitions import L, PX, UPDATE_CONST
 from components.Spritesheet import Spritesheet
+from utils import sound_path
 
 
 class Snake:
@@ -25,6 +25,7 @@ class Snake:
         self.sprite_counter = 0
         self.num_sprites = 4
         self.spritesheet = Spritesheet('Character')
+        self.lost_sound = pygame.mixer.Sound(sound_path('perdeu.ogg'))
 
     def get_head_position(self):
         return self.body[0]
@@ -43,10 +44,12 @@ class Snake:
 
         # checks if the snake collided with map borders
         if new_x < 0 or new_x >= self.width or new_y >= self.height or new_y < 0:
+            self.lost_sound.play()
             return True
 
         # checks if the snake collided with itself
         if new in self.body[3:]:
+            self.lost_sound.play()
             return True
         else:
             self.body.insert(0, new)

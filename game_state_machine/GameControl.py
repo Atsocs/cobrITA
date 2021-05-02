@@ -1,6 +1,7 @@
 import pygame
 from state_machine.Control import Control
 from game_states.Playing import Playing
+from utils import sound_path
 
 
 class GameControl(Control):
@@ -16,6 +17,8 @@ class GameControl(Control):
         Pretty much the entirety of the game's runtime will be
         spent inside this while loop.
         """
+        pygame.mixer.music.load(sound_path("na_cova_dela.ogg"))
+        pygame.mixer.music.play(-1)
         while not self.done:
             self.clock_counter += 1
             self.clock.tick(self.fps)

@@ -12,6 +12,7 @@ from components.Map import Map
 from components.PowerUpFactory import PowerUpFactory
 from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT, MAX_SCORES, GRADES
 from game_state_machine.GameState import GameState
+from utils import sound_path
 
 # interval time to CREATE_PWUP event
 PWUP_INTERVAL = 5000
@@ -33,6 +34,8 @@ class Playing(GameState, ABC):
         self.snake = Snake()
         self.food = Food()
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
+        self.gain_sound = pygame.mixer.Sound(sound_path('aumentou.ogg'))
+        self.powerup_sound = pygame.mixer.Sound(sound_path('powerup.ogg'))
         self.interval = PWUP_INTERVAL
         pygame.time.set_timer(CREATE_PWUP, self.interval)
         self.active_powerups = []
@@ -52,11 +55,13 @@ class Playing(GameState, ABC):
             return
 
         if self.snake.get_head_position() == self.food.position:
+            self.gain_sound.play()
             self.snake.length += 1
             self.food.randomize_position(self.snake.body + self.factory.get_positions())
 
         for p in self.factory.collectable_powerups:
             if self.snake.get_head_position() == p.position:
+                self.powerup_sound.play()
                 p.get_effect(self.snake)
                 if p.lasting:
                     self.active_powerups.append(p)
