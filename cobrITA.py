@@ -17,7 +17,7 @@ screen = pygame.display.set_mode(screen_size := (PX * L, PX * L))
 fps = 60
 
 states = [Menu(),
-          Credits('Menu'), Help('Menu'), Achievements('Menu'),
+          Credits('Menu'), Help(), Achievements('Menu'),
           MapSelection(), Paused(),
           PlayingFeijao(), PlayingQuadra(), PlayingApart(), PlayingHall()]
 start_state = 'Menu'
