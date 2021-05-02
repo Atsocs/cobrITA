@@ -25,7 +25,7 @@ class Playing(GameState, ABC):
     def get_map(self, map_name):
         tmxpath = os.path.join(MAPS_DIR, 'tmx', map_name + '.tmx')
         tmxdata = load_pygame(tmxpath)
-        self.map = Map(map_name, tmxdata)
+        self.map = Map(map_name, tmxdata, None, d=2)
 
     def startup(self):
         if self.paused:  # came from Paused state
@@ -53,7 +53,7 @@ class Playing(GameState, ABC):
 
         if self.snake.get_head_position() == self.food.position:
             self.snake.length += 1
-            self.food.randomize_position(self.snake.body+self.factory.get_positions())
+            self.food.randomize_position(self.snake.body + self.factory.get_positions())
 
         for p in self.factory.collectable_powerups:
             if self.snake.get_head_position() == p.position:
@@ -67,7 +67,7 @@ class Playing(GameState, ABC):
 
     def update_score(self):
         maxsc = MAX_SCORES[self.__str__()[7:]]
-        sc = (self.snake.length - 1)/maxsc
+        sc = (self.snake.length - 1) / maxsc
         # fail -> belle epoque or little hell
         # legend -> cancer area
         fail = legend = False
@@ -129,7 +129,7 @@ class Playing(GameState, ABC):
 
     def get_event(self, event):
         if event.type == CREATE_PWUP:
-            prohibited = self.snake.body+self.factory.get_positions()+[self.food.position]
+            prohibited = self.snake.body + self.factory.get_positions() + [self.food.position]
             self.factory.maybe_create_powerup(prohibited)
             return True
         if event.type == STOP_EFFECT:

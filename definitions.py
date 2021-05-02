@@ -10,7 +10,7 @@ SPRITES_DIR = os.path.join(RESOURCES_DIR, 'sprites')
 POWERUPS_DIR = os.path.join(SPRITES_DIR, 'powerup')
 
 PX = 32
-L = 20
+L = 16
 
 # don't know how to define this!!!
 UPDATE_CONST = 15
