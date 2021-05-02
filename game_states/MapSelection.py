@@ -73,7 +73,6 @@ class MapSelection(GameState):
             self.next_state = self.get_gameplay_state(button)
             self.done = True
         elif e.key == K_m:
-            selected = 'Menu'
             self.next_state = 'Menu'
             self.done = True
 
