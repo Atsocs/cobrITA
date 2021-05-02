@@ -8,6 +8,8 @@ class Map:
     def __init__(self, name: str, tmxdata, is_free, d, w=L, h=L):
         self.w, self.h, self.d = w, h, d
         self.tmxdata = tmxdata
+        if is_free is None:
+            is_free = self.get_is_free()
         self.is_free = is_free
 
     def draw(self, surface: pygame.Surface):
@@ -16,3 +18,8 @@ class Map:
                 for y in range(self.h):
                     image = self.tmxdata.get_tile_image(x, y, z)
                     draw_image(surface, image, x, y)
+
+    def get_is_free(self):
+        res = self.tmxdata.layers[0].data
+        res = tuple([tuple(x) for x in res])
+        return res
