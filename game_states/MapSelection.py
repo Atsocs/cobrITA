@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 
 from definitions import background_color
 from game_state_machine.GameState import GameState
@@ -66,7 +67,15 @@ class MapSelection(GameState):
         surface.blit(text_surf, text_rect)
 
     def on_key_up(self, e):
-        pass
+        if K_1 <= e.key <= K_4:
+            selected = str(e.key - K_1 + 1)
+            button = next(b for b in self.buttons if b['msg'] == selected)
+            self.next_state = self.get_gameplay_state(button)
+            self.done = True
+        elif e.key == K_m:
+            selected = 'Menu'
+            self.next_state = 'Menu'
+            self.done = True
 
     def on_mouse_up(self, e):
         if e.button == 1:
