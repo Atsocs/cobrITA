@@ -11,7 +11,7 @@ class Map:
         self.is_free = is_free
 
     def draw(self, surface: pygame.Surface):
-        for z in range(self.d):
+        for z in range(1, self.d):
             for x in range(self.w):
                 for y in range(self.h):
                     image = self.tmxdata.get_tile_image(x, y, z)
