@@ -1,7 +1,6 @@
 from game_state_machine.GameState import GameState
 from definitions import background_color
 import pygame
-from pygame.locals import *
 
 
 # Inherit from a game_state that does nothing
