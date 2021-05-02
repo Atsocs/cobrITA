@@ -131,6 +131,7 @@ class Playing(GameState, ABC):
     def get_event(self, event):
         if event.type == CREATE_PWUP:
             prohibited = self.snake.body + self.factory.get_positions() + [self.food.position]
+            prohibited += self.map.get_prohibited_list()
             self.factory.maybe_create_powerup(prohibited)
             return True
         if event.type == STOP_EFFECT:
