@@ -43,7 +43,6 @@ class Help(GameState):
         self.next_state = "Menu"
         self.done = True
 
-
     def on_mouse_up(self, e):
         pass
 
@@ -83,5 +82,3 @@ class Help(GameState):
         self.rules_rect = self.rules.get_rect(center=self.rules_center)
         self.boundary_rect = self.boundary.get_rect(center=self.boundary_center)
         self.final_rect = self.final.get_rect(center=self.final_center)
-
-
