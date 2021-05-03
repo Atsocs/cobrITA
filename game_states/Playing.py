@@ -27,7 +27,7 @@ class Playing(GameState, ABC):
         if self.paused:  # came from Paused state
             return
         prohibited = self.map.get_prohibited_list()
-        self.snake = Snake(prohibited=prohibited)
+        self.snake = Snake(prohibited=prohibited, head=self.head, hd=self.head_direction)
         self.food = Food(prohibited=prohibited)
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         self.gain_sound = pygame.mixer.Sound(sound_path('aumentou.ogg'))
@@ -155,22 +155,30 @@ class Playing(GameState, ABC):
 class PlayingFeijao(Playing):
     def __init__(self, next_state=None):
         super().__init__(next_state)
+        self.head = (4, 4)
+        self.head_direction = (1, 0)  # right
         self.get_map(map_name='feijao')
 
 
 class PlayingHall(Playing):
     def __init__(self, next_state=None):
         super().__init__(next_state)
+        self.head = (0, 6)
+        self.head_direction = (1, 0)  # right
         self.get_map(map_name='hall')
 
 
 class PlayingQuadra(Playing):
     def __init__(self, next_state=None):
         super().__init__(next_state)
+        self.head = (8, 15)
+        self.head_direction = (0, -1)  # up
         self.get_map(map_name='quadra')
 
 
 class PlayingApart(Playing):
     def __init__(self, next_state=None):
         super().__init__(next_state)
+        self.head = (0, 8)
+        self.head_direction = (1, 0)  # right
         self.get_map(map_name='apart')

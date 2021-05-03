@@ -7,20 +7,20 @@ from utils import sound_path
 
 
 class Snake:
-    def __init__(self, prohibited=None):
-        self.up = (0, -1)
-        self.down = (0, 1)
-        self.left = (-1, 0)
-        self.right = (1, 0)
+    def __init__(self, prohibited=None, head=None, hd=None):
         self.width = self.height = L
         self.length = 1
         self.update_counter = UPDATE_CONST
 
-        d = (self.up, self.down, self.left, self.right)
-        self.head_direction = random.choice(d)
-
-        head = self.initial_head(prohibited)
+        head = self.initial_head(prohibited) if head is None else head
         self.body = [head]
+
+        self.up = (0, -1)
+        self.down = (0, 1)
+        self.left = (-1, 0)
+        self.right = (1, 0)
+        d = (self.up, self.down, self.left, self.right)
+        self.head_direction = random.choice(d) if hd is None else hd
         self.directions = [self.head_direction]
 
         self.sprite_counter = 0
@@ -103,6 +103,7 @@ class Snake:
         self.directions = tmp
         self.head_direction = tmp[0]
         self.body.reverse()
+
     def initial_head(self, prohibited=None):
         if prohibited is None:
             prohibited = []
