@@ -153,9 +153,9 @@ class Playing(GameState, ABC):
         tmxdata = load_pygame(tmxpath)
         self.map = Map(map_name, tmxdata, d=3)
 
-    def get_max_score(self, map, difficulty):
+    def get_max_score(self, current_map, difficulty):
         n = 0
-        for x in map.get_is_free():
+        for x in current_map.get_is_free():
             n += x.count(1)
         self.maxsc = n//difficulty
 
