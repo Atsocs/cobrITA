@@ -24,11 +24,11 @@ class MapSelection(GameState):
 
         # Mensagem e Posição do canto superior esquerdo de cada botao
         self.buttons = [
-            {'name': 'hall', 'msg': '1', 'pos': f(-2)},  # hall do A
-            {'name': 'feijao', 'msg': '2', 'pos': f(-1)},  # feijao
-            {'name': 'quadra', 'msg': '3', 'pos': f(0)},  # quadra do C
-            {'name': 'apart', 'msg': '4', 'pos': f(1)},  # apart do C-
-            {'name': 'menu', 'msg': 'Menu', 'pos': f(2)},
+            {'name': 'menu', 'msg': 'Menu', 'pos': f(-2)},
+            {'name': 'quadra', 'msg': '1', 'pos': f(-1)},  # quadra do C
+            {'name': 'hall', 'msg': '2', 'pos': f(0)},  # hall do A
+            {'name': 'apart', 'msg': '3', 'pos': f(1)},  # apart do C-
+            {'name': 'feijao', 'msg': '4', 'pos': f(2)},  # feijao
         ]
 
         self.rects = [(b['pos'], b) for b in self.buttons]
