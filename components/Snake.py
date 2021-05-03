@@ -28,12 +28,17 @@ class Snake:
         self.spritesheet = Spritesheet('Character')
         self.lost_sound = pygame.mixer.Sound(sound_path('perdeu.ogg'))
 
+        self.last_turn_command = self.head_direction
+        self.turns_to_apply = []
+
     def get_head_position(self):
         return self.body[0]
 
-    def turn(self, to):
-        if (to[0] * -1, to[1] * -1) != self.head_direction:
-            self.head_direction = to
+    def add_turn_command(self, to):
+        if (to[0] * -1, to[1] * -1) == self.last_turn_command:
+            return
+        self.last_turn_command = to
+        self.turns_to_apply.append(to)
 
     def move(self, map_prohibited=None):
         """
@@ -48,6 +53,11 @@ class Snake:
             return True
 
         cur = self.get_head_position()
+
+        # turn
+        if self.turns_to_apply:
+            self.head_direction = self.turns_to_apply.pop(0)
+
         x, y = self.head_direction
         new_x, new_y = new = (cur[0] + x, cur[1] + y)
 

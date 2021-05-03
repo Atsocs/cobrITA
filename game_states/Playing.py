@@ -121,7 +121,7 @@ class Playing(GameState, ABC):
             K_DOWN: self.snake.down,
         }
         if e.key in d:
-            self.snake.turn(d[e.key])
+            self.snake.add_turn_command(d[e.key])
         elif e.key in [K_ESCAPE, K_p]:
             self.next_state = "Paused"
             self.enter_sound.play()
