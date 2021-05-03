@@ -25,6 +25,7 @@ class Playing(GameState, ABC):
 
     def startup(self):
         if self.paused:  # came from Paused state
+            self.paused = False
             return
         prohibited = self.map.get_prohibited_list()
         self.snake = Snake(prohibited=prohibited, head=self.head, hd=self.head_direction)
