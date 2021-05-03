@@ -90,10 +90,6 @@ class Playing(GameState, ABC):
             fail = True
 
         score_text = "Score: {}".format(score)
-        f = self.fonts['h2']
-        self.score_surf = f.render(score_text, True, pygame.Color("yellow"))
-        self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
-        self.score_rect.move_ip(10, 10)
         # change color based on the concepts
         if fail:
             color = pygame.Color("red")
@@ -101,7 +97,10 @@ class Playing(GameState, ABC):
             color = pygame.Color("green")
         else:
             color = pygame.Color("yellow")
-        self.score_surf = f.render(score_text, True, color)
+        f = self.fonts['h2']
+        self.score_surf = f.render(score_text, True, color, "gray")
+        self.score_rect = self.score_surf.get_rect(left=self.get_screen_rect().left)
+        self.score_rect.move_ip(10, 10)
 
     def draw(self, surface, draw_snake=True):
         self.map.draw(surface)
