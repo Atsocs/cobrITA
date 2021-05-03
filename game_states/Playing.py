@@ -138,9 +138,10 @@ class Playing(GameState, ABC):
             prohibited += self.map.get_prohibited_list()
             self.factory.maybe_create_powerup(prohibited)
             return True
-        if event.type == STOP_EFFECT:
-            self.active_powerups.pop(0).reset_effect(self.snake)
-            return True
+        if event.type == STOP_EFFECT:  # todo: fixme, i'm BRONCO!
+            if self.active_powerups:
+                self.active_powerups.pop(0).reset_effect(self.snake)
+                return True
         return super().get_event(event)
 
     def get_map(self, map_name):
