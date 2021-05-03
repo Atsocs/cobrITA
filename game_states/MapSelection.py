@@ -3,9 +3,9 @@ import os
 import pygame
 from pygame.locals import *
 
-from definitions import background_color, MAPS_DIR
+from definitions import MAPS_DIR
 from game_state_machine.GameState import GameState
-from utils import sound_path, draw_image
+from utils import sound_path
 
 
 class MapSelection(GameState):
