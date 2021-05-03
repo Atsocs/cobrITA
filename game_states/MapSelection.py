@@ -49,6 +49,13 @@ class MapSelection(GameState):
         surface.blit(bg, (0, 0))
         for b in self.buttons:
             self.draw_button(surface, b)
+        self.text = "Press/Click 1-4 to play or 'M' to go to Menu"
+        f2 = self.fonts['h3']
+        text_ = f2.render(self.text, True, pygame.Color("yellow"), 'black')
+        r = Rect((0, 0), (0, 0))
+        r.centerx = self.get_screen_rect().centerx
+        r.move_ip(-130, 490)
+        surface.blit(text_, r.topleft)
 
     def draw_button(self, surface, button_info):
         name = button_info['name']
