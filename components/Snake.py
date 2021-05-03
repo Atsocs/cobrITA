@@ -73,10 +73,10 @@ class Snake:
 
     def draw(self, surface: pygame.Surface):
         if self.sprite_counter >= self.num_sprites * self.update_counter:
-            self.sprite_counter = 0
+            self.sprite_counter = 0  # fixme
 
         for pos, direction in zip(self.body, self.directions):
-            pos = tuple((PX * x) for x in pos)
+            pos = tuple((PX * x) for x in pos)  # fixme
             sprite = self.get_sprite(direction)
             surface.blit(sprite, pos)
 
