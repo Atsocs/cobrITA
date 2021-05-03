@@ -10,7 +10,7 @@ from components.Snake import Snake
 from components.Food import Food
 from components.Map import Map
 from components.PowerUpFactory import PowerUpFactory
-from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT, MAX_SCORES, GRADES
+from definitions import MAPS_DIR, STOP_EFFECT, CREATE_PWUP, PWUP_DICT, GRADES
 from game_state_machine.GameState import GameState
 from utils import sound_path
 
@@ -73,8 +73,7 @@ class Playing(GameState, ABC):
         self.update_score()
 
     def update_score(self):
-        maxsc = MAX_SCORES[self.__str__()[7:]]
-        sc = (self.snake.length - 1) / maxsc
+        sc = (self.snake.length - 1) / self.maxsc
         # fail -> belle epoque or little hell
         # legend -> cancer area
         fail = legend = False
@@ -154,6 +153,12 @@ class Playing(GameState, ABC):
         tmxdata = load_pygame(tmxpath)
         self.map = Map(map_name, tmxdata, d=3)
 
+    def get_max_score(self, map, difficulty):
+        n = 0
+        for x in map.get_is_free():
+            n += x.count(1)
+        self.maxsc = n//difficulty
+
 
 class PlayingFeijao(Playing):
     def __init__(self, next_state=None):
@@ -161,6 +166,7 @@ class PlayingFeijao(Playing):
         self.head = (4, 4)
         self.head_direction = (1, 0)  # right
         self.get_map(map_name='feijao')
+        self.get_max_score(self.map, 6)
 
 
 class PlayingHall(Playing):
@@ -169,6 +175,7 @@ class PlayingHall(Playing):
         self.head = (0, 6)
         self.head_direction = (1, 0)  # right
         self.get_map(map_name='hall')
+        self.get_max_score(self.map, 6)
 
 
 class PlayingQuadra(Playing):
@@ -177,6 +184,7 @@ class PlayingQuadra(Playing):
         self.head = (8, 15)
         self.head_direction = (0, -1)  # up
         self.get_map(map_name='quadra')
+        self.get_max_score(self.map, 4)
 
 
 class PlayingApart(Playing):
@@ -185,3 +193,4 @@ class PlayingApart(Playing):
         self.head = (15, 8)
         self.head_direction = (-1, 0)  # left
         self.get_map(map_name='apart')
+        self.get_max_score(self.map, 8)

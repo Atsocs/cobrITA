@@ -14,7 +14,7 @@ PX = 32
 L = 16
 
 # don't know how to define this!!!
-UPDATE_CONST = 15
+UPDATE_CONST = 20
 
 # pygame event for power-up creation
 CREATE_PWUP = pygame.event.custom_type()
@@ -25,15 +25,6 @@ STOP_EFFECT = pygame.event.custom_type()
 PWUP_DICT = {
     'Accelerate': {'key': 0, 'lasting': True, 'interval': 3000},
     'Reverse': {'key': 1, 'lasting': False}
-}
-
-# max scores to each map
-# concepts (L, MB, B, R, I and D) are based on this
-MAX_SCORES = {
-    'Feijao': 12,
-    'Hall': 12,
-    'Quadra': 12,
-    'Apart': 12
 }
 
 GRADES = {
