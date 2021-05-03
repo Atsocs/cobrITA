@@ -1,9 +1,4 @@
-#
-# WARNING: SPRITES MUST BE UPDATED!!!
-#
-
 import random
-import os
 
 import pygame
 
@@ -14,15 +9,16 @@ from utils import draw_image
 
 class PowerUp:
     def __init__(self, **kwargs):
-        self.SPRITE_COUNTER_MAX = 4
         self.board_width = self.board_height = L
         self.randomize_position()
-        self.sprite_counter = 0
-        # key to define power-up effect
-        self.effect_key = kwargs['key']
+
+        self.effect_key = kwargs['key'] # key to define power-up effect
         self.lasting = kwargs['lasting']
         if self.lasting:
             self.duration = kwargs['interval']
+
+        self.sprite_counter = 0
+        self.num_sprites = 4
         self.spritesheet = Spritesheet('Powerups')
 
     def randomize_position(self, prohibited=None):
@@ -37,15 +33,17 @@ class PowerUp:
                 return
 
     def draw(self, surface: pygame.Surface):
+        if self.sprite_counter >= self.num_sprites * UPDATE_CONST:
+            self.sprite_counter = 0
+
         sprite = self.get_sprite()
         draw_image(surface, sprite, *self.position)
 
         self.sprite_counter += 1
-        self.sprite_counter %= self.SPRITE_COUNTER_MAX
 
     def get_sprite(self):
         # fixme: gambi alert
-        i = (not self.effect_key) * self.SPRITE_COUNTER_MAX + self.sprite_counter
+        i = (not self.effect_key) * self.num_sprites + self.sprite_counter // UPDATE_CONST
         filename = f'Powerups{i}.png'
         sprite = self.spritesheet.parse_sprite(filename)
         return sprite
