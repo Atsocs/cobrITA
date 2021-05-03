@@ -7,7 +7,7 @@ from utils import sound_path
 
 
 class Snake:
-    def __init__(self):
+    def __init__(self, prohibited=None):
         self.up = (0, -1)
         self.down = (0, 1)
         self.left = (-1, 0)
@@ -19,7 +19,8 @@ class Snake:
         d = (self.up, self.down, self.left, self.right)
         self.head_direction = random.choice(d)
 
-        self.body = [head := (self.width // 2, self.height // 2)]
+        head = self.initial_head(prohibited)
+        self.body = [head]
         self.directions = [self.head_direction]
 
         self.sprite_counter = 0
@@ -34,23 +35,33 @@ class Snake:
         if (to[0] * -1, to[1] * -1) != self.head_direction:
             self.head_direction = to
 
-    def move(self):
+    def move(self, map_prohibited=None):
         """
         :return: has collided?
         """
+
+        if map_prohibited is None:
+            map_prohibited = []
+
+        def lose():
+            self.lost_sound.play()
+            return True
+
         cur = self.get_head_position()
         x, y = self.head_direction
         new_x, new_y = new = (cur[0] + x, cur[1] + y)
 
+        # checks if snake collided with something inside the map
+        if new in map_prohibited:
+            return lose()
+
         # checks if the snake collided with map borders
         if new_x < 0 or new_x >= self.width or new_y >= self.height or new_y < 0:
-            self.lost_sound.play()
-            return True
+            return lose()
 
         # checks if the snake collided with itself
         if new in self.body[3:]:
-            self.lost_sound.play()
-            return True
+            return lose()
         else:
             self.body.insert(0, new)
             self.directions.insert(0, self.head_direction)
@@ -92,3 +103,13 @@ class Snake:
         self.directions = tmp
         self.head_direction = tmp[0]
         self.body.reverse()
+    def initial_head(self, prohibited=None):
+        if prohibited is None:
+            prohibited = []
+        while True:
+            head = (
+                random.randint(0, self.width - 1),
+                random.randint(0, self.height - 1)
+            )
+            if head not in prohibited:
+                return head

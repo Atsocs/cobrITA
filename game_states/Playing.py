@@ -26,8 +26,9 @@ class Playing(GameState, ABC):
     def startup(self):
         if self.paused:  # came from Paused state
             return
-        self.snake = Snake()
-        self.food = Food(prohibited=self.map.get_prohibited_list())
+        prohibited = self.map.get_prohibited_list()
+        self.snake = Snake(prohibited=prohibited)
+        self.food = Food(prohibited=prohibited)
         self.factory = PowerUpFactory(PWUP_DICT)  # available pwups can be changed here
         self.gain_sound = pygame.mixer.Sound(sound_path('aumentou.ogg'))
         self.powerup_sound = pygame.mixer.Sound(sound_path('powerup.ogg'))
@@ -45,7 +46,8 @@ class Playing(GameState, ABC):
         del self.factory
 
     def update(self):
-        collided = self.snake.move()
+        map_prohibited = self.map.get_prohibited_list()
+        collided = self.snake.move(map_prohibited)
         if collided:
             self.on_collision()
             return
