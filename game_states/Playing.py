@@ -179,6 +179,6 @@ class PlayingQuadra(Playing):
 class PlayingApart(Playing):
     def __init__(self, next_state=None):
         super().__init__(next_state)
-        self.head = (0, 8)
-        self.head_direction = (1, 0)  # right
+        self.head = (15, 8)
+        self.head_direction = (-1, 0)  # left
         self.get_map(map_name='apart')
