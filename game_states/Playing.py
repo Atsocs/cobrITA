@@ -22,6 +22,7 @@ class Playing(GameState, ABC):
     def __init__(self, next_state):
         super().__init__(next_state)
         self.paused = False
+        self.head = self.head_direction = None
 
     def startup(self):
         if self.paused:  # came from Paused state

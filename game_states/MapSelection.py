@@ -1,34 +1,32 @@
+import os
+
 import pygame
 from pygame.locals import *
 
-from definitions import background_color
+from definitions import background_color, MAPS_DIR
 from game_state_machine.GameState import GameState
-from utils import sound_path
+from utils import sound_path, draw_image
 
 
 class MapSelection(GameState):
     def __init__(self):
         super().__init__()
-        self.button_size = 60, 30
+        self.button_size = 50, 30
 
         # Cores utilizadas no MapSelection
         self.button_color = pygame.Color("yellow")
         self.color_when_clicked = pygame.Color("white")
-        r = self.get_screen_rect()
+        r = Rect((0, 0), self.button_size)
+        r.center = self.get_screen_rect().center
         K = 50
-
-        def f(i):
-            s = pygame.Rect((0, 0), self.button_size)
-            s.center = r.move(0, i * K).center
-            return s
 
         # Mensagem e Posição do canto superior esquerdo de cada botao
         self.buttons = [
-            {'name': 'menu', 'msg': 'Menu', 'pos': f(-2)},
-            {'name': 'quadra', 'msg': '1', 'pos': f(-1)},  # quadra do C
-            {'name': 'hall', 'msg': '2', 'pos': f(0)},  # hall do A
-            {'name': 'apart', 'msg': '3', 'pos': f(1)},  # apart do C-
-            {'name': 'feijao', 'msg': '4', 'pos': f(2)},  # feijao
+            {'name': 'menu', 'msg': 'Menu', 'pos': r.move(0, 0)},
+            {'name': 'quadra', 'msg': '1', 'pos': r.move(-180, 88)},  # quadra do C
+            {'name': 'hall', 'msg': '2', 'pos': r.move(40, -175)},  # hall do A
+            {'name': 'apart', 'msg': '3', 'pos': r.move(100, 170)},  # apart do C-
+            {'name': 'feijao', 'msg': '4', 'pos': r.move(-168, -115)},  # feijao
         ]
 
         self.rects = [(b['pos'], b) for b in self.buttons]
@@ -46,7 +44,9 @@ class MapSelection(GameState):
         pass
 
     def draw(self, surface):
-        surface.fill(background_color)
+        # surface.fill(background_color)
+        bg = pygame.image.load(os.path.join(MAPS_DIR, 'h8_square_bare.png'))
+        surface.blit(bg, (0, 0))
         for b in self.buttons:
             self.draw_button(surface, b)
 
