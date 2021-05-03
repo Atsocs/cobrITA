@@ -38,7 +38,8 @@ class Snake:
         if (to[0] * -1, to[1] * -1) == self.last_turn_command:
             return
         self.last_turn_command = to
-        self.turns_to_apply.append(to)
+        if len(self.turns_to_apply) < 3:  # limit the "simultaneous" commands to three
+            self.turns_to_apply.append(to)
 
     def move(self, map_prohibited=None):
         """
