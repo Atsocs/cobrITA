@@ -78,8 +78,11 @@ class MapSelection(GameState):
         surface.blit(text_surf, text_rect)
 
     def on_key_up(self, e):
-        if K_1 <= e.key <= K_4:
-            selected = str(e.key - K_1 + 1)
+        if K_1 <= e.key <= K_4 or K_KP1 <= e.key <= K_KP4:
+            if K_1 <= e.key <= K_4:
+                selected = str(e.key - K_1 + 1)
+            elif K_KP1 <= e.key <= K_KP4:
+                selected = str(e.key - K_KP1 + 1)
             button = next(b for b in self.buttons if b['msg'] == selected)
             self.enter_sound.play()
             self.next_state = self.get_gameplay_state(button)
