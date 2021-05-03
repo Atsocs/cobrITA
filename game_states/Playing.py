@@ -45,11 +45,11 @@ class Playing(GameState, ABC):
         del self.food
         del self.factory
 
-    def update(self):
+    def update(self, surface=None):
         map_prohibited = self.map.get_prohibited_list()
         collided = self.snake.move(map_prohibited)
         if collided:
-            self.on_collision()
+            self.on_collision(surface)
             return
 
         if self.snake.get_head_position() == self.food.position:
@@ -130,7 +130,9 @@ class Playing(GameState, ABC):
     def on_mouse_up(self, e):
         pass
 
-    def on_collision(self):
+    def on_collision(self, surface=None):
+        if surface is not None:
+            pygame.image.save(surface, "screenshot.jpg")
         self.next_state = 'Menu'
         self.done = True
 

@@ -40,7 +40,7 @@ class GameControl(Control):
         if issubclass(self.state.__class__, Playing):
             if self.clock_counter >= self.state.snake.update_counter:
                 self.clock_counter = 0
-                self.state.update()
+                self.state.update(self.screen)
         else:
             self.state.update()
 
